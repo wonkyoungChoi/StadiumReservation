@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">StadiumReservation</string>
+    <string name="Information3">* 다음으로 원하는 매치를 검색하거나 매치를 등록하거나 \n  내가 신청 또는 성사된 매치를 확인할 수 있습니다.</string>
+    <string name="Information2">* 먼저 시작 페이지에서 로그인을 합니다. \n   여기서 로그인 정보는 사용자 이름, 비밀번호를 받습니다.</string>
+    <string name="Information1">이 어플리케이션은 경기장을 예약하고\n매치를 잡는 어플입니다.</string>
+    <string name="Information4"><![CDATA[*  ‘→’, ‘←’를 눌러 다음설명으로 이동하세요.]]></string>
+</resources>

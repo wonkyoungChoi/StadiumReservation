@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:gravity="center"
+        android:text="경기장 매치 예약 어플"
+        android:textSize="40dp" />
+
+    <Button
+        android:id="@+id/login"
+        android:onClick="onClicked"
+        android:layout_height="wrap_content"
+        android:layout_width="200dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="120dp"
+        android:text="로그인하기"
+        android:textSize="30dp" />
+
+    <Button
+        android:id="@+id/information"
+        android:onClick="onClicked"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="30dp"
+        android:text="이 용 방 법"
+        android:textSize="30dp" />
+
+
+</LinearLayout>
