@@ -189,17 +189,20 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
         <RadioButton
+            android:id="@+id/number1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:onClick="numberButtonClicked"
             android:text="5:5"/>
         <RadioButton
+            android:id="@+id/number2"
             android:layout_marginStart="20dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:onClick="numberButtonClicked"
             android:text="6:6"/>
         <RadioButton
+            android:id="@+id/number3"
             android:layout_marginStart="20dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
