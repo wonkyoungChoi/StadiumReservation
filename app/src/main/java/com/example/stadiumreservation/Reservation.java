@@ -29,7 +29,7 @@ public class Reservation extends AppCompatActivity {
 
     Button btnSelectDate, btnSelectTime, btnFinishDate, btnFinishTime, ok, cancel;
 
-    String SelectDate, SelectTime, FinishDate, FinishTime, Tname, Stname;
+    String SelectDate, SelectTime, FinishDate, FinishTime;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,33 +46,37 @@ public class Reservation extends AppCompatActivity {
         btnFinishDate = (Button) findViewById(R.id.btnFinishDate);
         btnFinishTime = (Button) findViewById(R.id.btnFinishTime);
 
-        SelectDate = btnSelectDate.getText().toString();
-        SelectTime = btnSelectTime.getText().toString();
-        FinishDate = btnFinishDate.getText().toString();
-        FinishTime = btnFinishTime.getText().toString();
 
-        Tname = teamName.getText().toString();
-        Stname = stadiumName.getText().toString();
+
+
 
         ok = (Button) findViewById(R.id.ok);
         cancel = (Button) findViewById(R.id.cancel);
 
 
-
         ok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (Tname.trim().length() > 0
-                        && Stname.trim().length() > 0) {
+                if (teamName.getText().toString().trim().length() > 0
+                        && stadiumName.getText().toString().trim().length() > 0) {
+                    String tname = teamName.getText().toString();
+                    String stname = stadiumName.getText().toString();
+                    SelectDate = btnSelectDate.getText().toString();
+                    SelectTime = btnSelectTime.getText().toString();
+                    FinishDate = btnFinishDate.getText().toString();
+                    FinishTime = btnFinishTime.getText().toString();
+                    ReservationValue reservationValue = new ReservationValue(tname, stname, SelectDate, SelectTime,
+                            FinishDate, FinishTime, abilitySelected, numberSelected);
+                    reservationValue.setTeamName(tname);
+                    reservationValue.setStadiumName(stname);
+                    reservationValue.setStartDate(SelectDate);
+                    reservationValue.setStartTime(SelectTime);
+                    reservationValue.setFinishDate(FinishDate);
+                    reservationValue.setFinishTime(FinishTime);
+                    reservationValue.setAbility(abilitySelected);
+                    reservationValue.setNumber(numberSelected);
                     Intent intent = new Intent(getApplicationContext(), ReservationInfor.class);
-                    intent.putExtra("teamName", Tname);
-                    intent.putExtra("stadiumName", Stname);
-                    intent.putExtra("startDate", SelectDate);
-                    intent.putExtra("startTime", SelectTime);
-                    intent.putExtra("finishDate", FinishDate);
-                    intent.putExtra("finishTime", FinishTime);
-                    intent.putExtra("ability", abilitySelected);
-                    intent.putExtra("number", numberSelected);
+                    intent.putExtra("reservationValue", reservationValue);
 
                     startActivity(intent);
                 } else {
@@ -124,16 +128,19 @@ public class Reservation extends AppCompatActivity {
                 numberSelected="5:5";
                 Toast.makeText(getApplicationContext(), numberSelected + " 선택됨",
                         Toast.LENGTH_SHORT).show();
+                break;
 
             case R.id.number2:
                 numberSelected="6:6";
                 Toast.makeText(getApplicationContext(), numberSelected + " 선택됨",
                         Toast.LENGTH_SHORT).show();
+                break;
 
             case R.id.number3:
                 numberSelected="무관";
                 Toast.makeText(getApplicationContext(), numberSelected + " 선택됨",
                         Toast.LENGTH_SHORT).show();
+                break;
         }
     }
 

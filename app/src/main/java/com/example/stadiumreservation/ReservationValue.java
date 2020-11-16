@@ -12,6 +12,7 @@ public class ReservationValue implements Serializable {
     String ability;
     String number;
 
+
     public ReservationValue(String teamName, String stadiumName, String startDate, String startTime,
                             String finishDate, String finishTime, String ability, String number) {
         this.teamName = teamName;
