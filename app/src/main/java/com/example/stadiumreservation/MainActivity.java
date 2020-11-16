@@ -28,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
     public void onClicked(View v) {
         Intent intent = null;
 
+
         switch (v.getId()) {
             case R.id.login:
                 intent = new Intent(getApplicationContext(), LoginActivity.class);
