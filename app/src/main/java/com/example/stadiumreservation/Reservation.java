@@ -4,20 +4,15 @@ import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-
-import org.w3c.dom.Text;
 
 import java.util.Calendar;
 
@@ -29,7 +24,7 @@ public class Reservation extends AppCompatActivity {
 
     Button btnSelectDate, btnSelectTime, btnFinishDate, btnFinishTime, ok, cancel;
 
-    String SelectDate, SelectTime, FinishDate, FinishTime;
+    String tname, stname, SelectDate, SelectTime, FinishDate, FinishTime;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,36 +41,45 @@ public class Reservation extends AppCompatActivity {
         btnFinishDate = (Button) findViewById(R.id.btnFinishDate);
         btnFinishTime = (Button) findViewById(R.id.btnFinishTime);
 
-
+        ReservationValue reservationValue = new ReservationValue(tname, stname, SelectDate,
+                SelectTime, FinishDate, FinishTime, abilitySelected, numberSelected);
 
 
 
         ok = (Button) findViewById(R.id.ok);
         cancel = (Button) findViewById(R.id.cancel);
 
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+
 
         ok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (teamName.getText().toString().trim().length() > 0
-                        && stadiumName.getText().toString().trim().length() > 0) {
-                    String tname = teamName.getText().toString();
-                    String stname = stadiumName.getText().toString();
-                    SelectDate = btnSelectDate.getText().toString();
-                    SelectTime = btnSelectTime.getText().toString();
-                    FinishDate = btnFinishDate.getText().toString();
-                    FinishTime = btnFinishTime.getText().toString();
-                    ReservationValue reservationValue = new ReservationValue(tname, stname, SelectDate, SelectTime,
-                            FinishDate, FinishTime, abilitySelected, numberSelected);
-                    reservationValue.setTeamName(tname);
-                    reservationValue.setStadiumName(stname);
-                    reservationValue.setStartDate(SelectDate);
-                    reservationValue.setStartTime(SelectTime);
-                    reservationValue.setFinishDate(FinishDate);
-                    reservationValue.setFinishTime(FinishTime);
-                    reservationValue.setAbility(abilitySelected);
-                    reservationValue.setNumber(numberSelected);
-                    Intent intent = new Intent(getApplicationContext(), ReservationInfor.class);
+
+                tname = teamName.getText().toString();
+                stname = stadiumName.getText().toString();
+                SelectDate = btnSelectDate.getText().toString();
+                SelectTime = btnSelectTime.getText().toString();
+                FinishDate = btnFinishDate.getText().toString();
+                FinishTime = btnFinishTime.getText().toString();
+
+                reservationValue.setTeamName(tname);
+                reservationValue.setStadiumName(stname);
+                reservationValue.setStartDate(SelectDate);
+                reservationValue.setStartTime(SelectTime);
+                reservationValue.setFinishDate(FinishDate);
+                reservationValue.setFinishTime(FinishTime);
+                reservationValue.setAbility(abilitySelected);
+                reservationValue.setNumber(numberSelected);
+
+                if (tname.trim().length() > 0
+                        && stname.trim().length() > 0) {
+                    Intent intent = new Intent(getApplicationContext(), ReservationInfo.class);
                     intent.putExtra("reservationValue", reservationValue);
 
                     startActivity(intent);

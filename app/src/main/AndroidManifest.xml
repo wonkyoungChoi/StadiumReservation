@@ -16,14 +16,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Information" android:label="Information"></activity>
-        <activity android:name=".LoginActivity" android:label="LoginActivity"></activity>
-        <activity android:name=".MainMenu" android:label="MainMenu"></activity>
-        <activity android:name=".Reservation" android:label="Reservation"></activity>
-        <activity android:name=".Search" android:label="Search"></activity>
-        <activity android:name=".MyMatch" android:label="MyMatch"></activity>
-        <activity android:name=".Apply" android:label="Apply"></activity>
-        <activity android:name=".ReservationInfor" android:label="ReservationInfo"></activity>
+        <activity android:name=".Information" android:label="Information"/>
+        <activity android:name=".LoginActivity" android:label="LoginActivity"/>
+        <activity android:name=".MainMenu" android:label="MainMenu"/>
+        <activity android:name=".Reservation" android:label="Reservation"/>
+        <activity android:name=".Search" android:label="Search" />
+        <activity android:name=".MyMatch" android:label="MyMatch" />
+        <activity android:name=".Apply" android:label="Apply" />
+        <activity android:name=".ReservationInfo" android:label="ReservationInfo" />
     </application>
 
 </manifest>
