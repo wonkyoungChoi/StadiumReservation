@@ -31,9 +31,10 @@ public class LoginActivity extends AppCompatActivity {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(username.getText().toString().trim().length()>0
-                && password.getText().toString().trim().length()>0) {
-                    String name = username.getText().toString();
+                String name = username.getText().toString();
+                String passwd = password.getText().toString();
+                if(name.trim().length()>0
+                && passwd.trim().length()>0) {
                     Intent intent = new Intent(getApplicationContext(), MainMenu.class);
                     intent.putExtra("name", name);
                     startActivity(intent);

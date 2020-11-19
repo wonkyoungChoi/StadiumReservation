@@ -34,30 +34,50 @@
                 android:textSize="12sp" />
 
             <TextView
-                android:id="@+id/startTime"
-                android:layout_marginTop="2dp"
+                android:id="@+id/startDate"
                 android:layout_marginStart="6dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/stadiumName"
+                android:text="시작날짜"
+                android:textSize="12sp" />
+            <TextView
+                android:id="@+id/startTime"
+                android:layout_marginStart="3dp"
+                android:layout_toEndOf="@id/startDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/stadiumName"
                 android:text="시작시간"
                 android:textSize="12sp" />
+
             <TextView
+                android:id="@+id/space"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/stadiumName"
                 android:layout_toEndOf="@+id/startTime"
-                android:layout_marginStart="80dp"
+                android:layout_marginStart="20dp"
                 android:text="~" />
+
+
+            <TextView
+                android:id="@+id/finishDate"
+                android:layout_marginStart="20dp"
+                android:layout_toEndOf="@id/space"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/stadiumName"
+                android:text="종료날짜"
+                android:textSize="12sp" />
 
             <TextView
                 android:id="@+id/finishTime"
+                android:layout_marginStart="3dp"
+                android:layout_toEndOf="@id/finishDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/stadiumName"
-                android:layout_marginStart="100dp"
-                android:layout_toEndOf="@+id/startTime"
-                android:layout_marginTop="2dp"
                 android:text="종료시간"
                 android:textSize="12sp" />
 
@@ -89,13 +109,7 @@
                 android:text="매치 인원"
                 android:textSize="12sp" />
 
-            <Button
-                android:id="@+id/match"
-                android:layout_width="wrap_content"
-                android:layout_height="80dp"
-                android:layout_marginEnd="5dp"
-                android:layout_alignParentEnd="true"
-                android:text="매치신청" />
+
 
         </RelativeLayout>
     </androidx.cardview.widget.CardView>

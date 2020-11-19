@@ -16,16 +16,13 @@ public class ReservationInfo extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.reservation_result);
 
-
+        ReservationAdapter adapter = new ReservationAdapter();
         Button regist = (Button) findViewById(R.id.regist);
-
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(this,
                 LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
-
-        ReservationAdapter adapter = new ReservationAdapter();
 
         regist.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -48,12 +45,10 @@ public class ReservationInfo extends AppCompatActivity {
             String ability = reservationValue.getAbility();
             String number = reservationValue.getNumber();
 
-            adapter.addItem(new ReservationValue(name, stName, startDate, startTime,
+            adapter.addItem(0, new ReservationValue(name, stName, startDate, startTime,
                     finishDate, finishTime, ability, number));
 
+        adapter.notifyDataSetChanged();
         recyclerView.setAdapter(adapter);
-
+        }
     }
-
-
-}

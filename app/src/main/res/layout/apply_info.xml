@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+
+    <TextView
+        android:id="@+id/detail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:textSize="35sp"
+        android:text="매치 상세정보" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="팀 이름"
+        android:textSize="25sp"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="5dp"/>
+
+    <TextView
+        android:id="@+id/team"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="팀 이름"
+        android:textSize="20sp"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="5dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="경기장 이름"
+        android:textSize="25sp"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="5dp"/>
+
+    <TextView
+        android:id="@+id/stadium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="경기장"
+        android:textSize="20sp"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="5dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="경기 시작시간"
+        android:textSize="25sp"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="5dp"/>
+
+    <TextView
+        android:id="@+id/startDateTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="시작시간"
+        android:textSize="20sp"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="5dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="경기 종료시간"
+        android:textSize="25sp"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="5dp"/>
+
+    <TextView
+        android:id="@+id/finishDateTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="종료시간"
+        android:textSize="20sp"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="5dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="실 력"
+        android:textSize="25sp"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="5dp"/>
+
+    <TextView
+        android:id="@+id/ability_"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="실 력"
+        android:textSize="20sp"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="5dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="인원 수"
+        android:textSize="25sp"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="5dp"/>
+
+    <TextView
+        android:id="@+id/number_"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="인원"
+        android:textSize="20sp"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="5dp"/>
+
+</LinearLayout>

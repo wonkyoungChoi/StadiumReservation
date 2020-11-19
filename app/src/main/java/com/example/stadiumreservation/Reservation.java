@@ -13,7 +13,9 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 
 public class Reservation extends AppCompatActivity {
@@ -21,14 +23,19 @@ public class Reservation extends AppCompatActivity {
     RadioGroup numberrg;
 
     String abilitySelected , numberSelected ;
-
     Button btnSelectDate, btnSelectTime, btnFinishDate, btnFinishTime, ok, cancel;
-
     String tname, stname, SelectDate, SelectTime, FinishDate, FinishTime;
+
+
+    ArrayList<ReservationValue> items;
+    ReservationAdapter reservationAdapter;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.reservation);
+
+        items = new ArrayList<>();
+        reservationAdapter = new ReservationAdapter();
 
         EditText teamName = (EditText) findViewById(R.id.writeName);
         EditText stadiumName = (EditText) findViewById(R.id.writeStadium);
@@ -71,6 +78,7 @@ public class Reservation extends AppCompatActivity {
                 reservationValue.setTeamName(tname);
                 reservationValue.setStadiumName(stname);
                 reservationValue.setStartDate(SelectDate);
+
                 reservationValue.setStartTime(SelectTime);
                 reservationValue.setFinishDate(FinishDate);
                 reservationValue.setFinishTime(FinishTime);
@@ -78,9 +86,16 @@ public class Reservation extends AppCompatActivity {
                 reservationValue.setNumber(numberSelected);
 
                 if (tname.trim().length() > 0
+
+
                         && stname.trim().length() > 0) {
+
+                    items.add(0, new ReservationValue(tname, stname, SelectDate, SelectTime,
+                            FinishDate, FinishTime, abilitySelected, numberSelected));
+
                     Intent intent = new Intent(getApplicationContext(), ReservationInfo.class);
                     intent.putExtra("reservationValue", reservationValue);
+
 
                     startActivity(intent);
                 } else {

@@ -14,8 +14,8 @@ public class ReservationAdapter extends RecyclerView.Adapter<ReservationAdapter.
 
     ArrayList<ReservationValue> items = new ArrayList<>();
 
-    public void addItem(ReservationValue item) {
-        items.add(item);
+    public void addItem(int position , ReservationValue item) {
+        items.add(position, item);
     }
     public ReservationValue getItem(int position) {return items.get(position);}
 
