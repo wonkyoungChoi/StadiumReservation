@@ -24,6 +24,7 @@
         <activity android:name=".MyMatch" android:label="MyMatch" />
         <activity android:name=".Apply" android:label="Apply" />
         <activity android:name=".ReservationInfo" android:label="ReservationInfo" />
+        <activity android:name=".ApplyInfo" android:label="ApplyInfo" />
     </application>
 
 </manifest>

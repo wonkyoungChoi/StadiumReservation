@@ -50,6 +50,7 @@ public class ApplyAdapter extends RecyclerView.Adapter<ApplyAdapter.ViewHolder> 
         TextView FinTime;
         TextView abil;
         TextView num;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 

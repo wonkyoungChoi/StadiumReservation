@@ -8,6 +8,7 @@
 
     <TextView
         android:id="@+id/detail"
+        android:textStyle="bold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -15,6 +16,7 @@
         android:text="매치 상세정보" />
 
     <TextView
+        android:textStyle="bold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="팀 이름"
@@ -28,10 +30,11 @@
         android:layout_height="wrap_content"
         android:text="팀 이름"
         android:textSize="20sp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
         android:layout_marginStart="5dp"/>
 
     <TextView
+        android:textStyle="bold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="경기장 이름"
@@ -45,10 +48,11 @@
         android:layout_height="wrap_content"
         android:text="경기장"
         android:textSize="20sp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
         android:layout_marginStart="5dp"/>
 
     <TextView
+        android:textStyle="bold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="경기 시작시간"
@@ -62,10 +66,11 @@
         android:layout_height="wrap_content"
         android:text="시작시간"
         android:textSize="20sp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
         android:layout_marginStart="5dp"/>
 
     <TextView
+        android:textStyle="bold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="경기 종료시간"
@@ -79,10 +84,11 @@
         android:layout_height="wrap_content"
         android:text="종료시간"
         android:textSize="20sp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
         android:layout_marginStart="5dp"/>
 
     <TextView
+        android:textStyle="bold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="실 력"
@@ -96,10 +102,11 @@
         android:layout_height="wrap_content"
         android:text="실 력"
         android:textSize="20sp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
         android:layout_marginStart="5dp"/>
 
     <TextView
+        android:textStyle="bold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="인원 수"
@@ -113,7 +120,7 @@
         android:layout_height="wrap_content"
         android:text="인원"
         android:textSize="20sp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
         android:layout_marginStart="5dp"/>
 
 </LinearLayout>
