@@ -24,33 +24,33 @@
 
 
     <Button
-        android:id="@+id/reservation"
+        android:id="@+id/search"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="70dp"
+        android:onClick="onClicked"
+        android:text="경기장 검색"
+        android:textSize="30sp" />
+
+    <Button
+        android:id="@+id/reservation"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="30dp"
         android:onClick="onClicked"
         android:text="매치 예약"
         android:textSize="30sp" />
 
     <Button
         android:id="@+id/apply"
-        android:onClick="onClicked"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="30dp"
-        android:text="매치 신청"
-        android:textSize="30sp" />
-
-    <Button
-        android:id="@+id/search"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="30dp"
         android:onClick="onClicked"
-        android:text="경기장 검색"
+        android:text="매치 찾기"
         android:textSize="30sp" />
 
     <Button

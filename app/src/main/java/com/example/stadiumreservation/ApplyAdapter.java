@@ -32,6 +32,7 @@ public class ApplyAdapter extends RecyclerView.Adapter<ApplyAdapter.ViewHolder> 
         return new ApplyAdapter.ViewHolder(itemView);
     }
 
+
     @Override
     public void onBindViewHolder(@NonNull ApplyAdapter.ViewHolder holder, int position) {
         ReservationValue item = items.get(position);
@@ -74,7 +75,6 @@ public class ApplyAdapter extends RecyclerView.Adapter<ApplyAdapter.ViewHolder> 
                     }
                 }
             });
-
         }
 
         public void setItem(ReservationValue item) {

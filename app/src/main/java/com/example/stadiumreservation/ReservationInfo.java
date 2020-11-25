@@ -10,45 +10,43 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
+
 public class ReservationInfo extends AppCompatActivity {
+    int check_click = Reservation.check_click;
+    Button regist;
+
+    static ArrayList<ReservationValue> list = new ArrayList<>();
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.reservation_result);
 
-        ReservationAdapter adapter = new ReservationAdapter();
-        Button regist = (Button) findViewById(R.id.regist);
+        if(check_click==1) {
+            Intent intent = getIntent();
+            ReservationValue reservationValue =
+                    (ReservationValue) intent.getSerializableExtra("reservationValue");
+            list.add(reservationValue);
+        }
+
+
+        regist = (Button) findViewById(R.id.regist);
+        regist.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), Reservation.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(this,
                 LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
 
-        regist.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), Reservation.class);
-                startActivity(intent);
-            }
-        });
-
-            Intent intent = getIntent();
-            ReservationValue reservationValue =
-                    (ReservationValue) intent.getSerializableExtra("reservationValue");
-
-            String name = reservationValue.getTeamName();
-            String stName = reservationValue.getStadiumName();
-            String startDate = reservationValue.getStartDate();
-            String startTime = reservationValue.getStartTime();
-            String finishDate = reservationValue.getFinishDate();
-            String finishTime = reservationValue.getFinishTime();
-            String ability = reservationValue.getAbility();
-            String number = reservationValue.getNumber();
-
-            adapter.addItem(0, new ReservationValue(name, stName, startDate, startTime,
-                    finishDate, finishTime, ability, number));
-
-        adapter.notifyDataSetChanged();
+        ReservationAdapter adapter = new ReservationAdapter(list);
         recyclerView.setAdapter(adapter);
         }
     }

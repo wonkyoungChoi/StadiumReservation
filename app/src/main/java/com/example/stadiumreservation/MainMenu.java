@@ -28,7 +28,7 @@ public class MainMenu extends AppCompatActivity {
             case R.id.reservation :
                 in = new Intent(getApplicationContext(), Reservation.class);
                 break;
-            case R.id.apply :
+            case R.id.apply:
                 in = new Intent(getApplicationContext(), Apply.class);
                 break;
             case R.id.search :

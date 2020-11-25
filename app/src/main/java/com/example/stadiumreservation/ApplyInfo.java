@@ -3,23 +3,30 @@ package com.example.stadiumreservation;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 public class ApplyInfo extends AppCompatActivity {
+    TextView tName, stName, start, finish, ability, number;
+    Button match, cancel;
+
     @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.apply_info);
 
-        TextView tName = (TextView) findViewById(R.id.team);
-        TextView stName = (TextView) findViewById(R.id.stadium);
-        TextView start = (TextView) findViewById(R.id.startDateTime);
-        TextView finish = (TextView) findViewById(R.id.finishDateTime);
-        TextView ability = (TextView) findViewById(R.id.ability_);
-        TextView number = (TextView) findViewById(R.id.number_);
+        match = (Button) findViewById(R.id.match);
+        cancel = (Button) findViewById(R.id.applyCancel);
+        tName = (TextView) findViewById(R.id.team);
+        stName = (TextView) findViewById(R.id.stadium);
+        start = (TextView) findViewById(R.id.startDateTime);
+        finish = (TextView) findViewById(R.id.finishDateTime);
+        ability = (TextView) findViewById(R.id.ability_);
+        number = (TextView) findViewById(R.id.number_);
 
         Intent intent = getIntent();
         ReservationValue reservationValue = (ReservationValue) intent.getSerializableExtra("applyValue");
@@ -41,5 +48,18 @@ public class ApplyInfo extends AppCompatActivity {
         number.setText(num);
 
 
+        match.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            }
+        });
+
+
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) { finish(); }
+        });
+
     }
+
 }

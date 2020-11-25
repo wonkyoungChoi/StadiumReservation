@@ -12,21 +12,22 @@ import java.util.ArrayList;
 
 public class ReservationAdapter extends RecyclerView.Adapter<ReservationAdapter.ViewHolder>{
 
-    ArrayList<ReservationValue> items = new ArrayList<>();
+    static ArrayList<ReservationValue> items = null;
 
-    public void addItem(int position , ReservationValue item) {
-        items.add(position, item);
-    }
-    public ReservationValue getItem(int position) {return items.get(position);}
+    //생성자에서 데이터 리스트 객체를 전달받음
+    ReservationAdapter(ArrayList<ReservationValue> list) {items = list;}
+
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View itemView = inflater.inflate(R.layout.reservation_item, parent, false);
+
         return new ViewHolder(itemView);
     }
 
+    // onBindViewHolder() - position에 해당하는 데이터를 뷰홀더의 아이템뷰에 표시
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         ReservationValue item = items.get(position);
@@ -36,6 +37,8 @@ public class ReservationAdapter extends RecyclerView.Adapter<ReservationAdapter.
     @Override
     public int getItemCount() { return items.size(); }
 
+
+    //아이템 뷰를 저장하는 뷰홀더 클래스
     class ViewHolder extends RecyclerView.ViewHolder {
         TextView tName;
         TextView staName;
@@ -70,7 +73,6 @@ public class ReservationAdapter extends RecyclerView.Adapter<ReservationAdapter.
             FinTime.setText(item.getFinishTime());
             abil.setText(item.getAbility());
             num.setText(item.getNumber());
-
         }
     }
 }

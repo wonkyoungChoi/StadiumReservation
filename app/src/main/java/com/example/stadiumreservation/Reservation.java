@@ -21,24 +21,23 @@ import java.util.Calendar;
 public class Reservation extends AppCompatActivity {
     RadioGroup abilityrg;
     RadioGroup numberrg;
+    static int check_click = 0;
+
 
     String abilitySelected , numberSelected ;
     Button btnSelectDate, btnSelectTime, btnFinishDate, btnFinishTime, ok, cancel;
     String tname, stname, SelectDate, SelectTime, FinishDate, FinishTime;
+    EditText teamName, stadiumName;
 
-
-    ArrayList<ReservationValue> items;
-    ReservationAdapter reservationAdapter;
+    ReservationValue reservationValue;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.reservation);
 
-        items = new ArrayList<>();
-        reservationAdapter = new ReservationAdapter();
 
-        EditText teamName = (EditText) findViewById(R.id.writeName);
-        EditText stadiumName = (EditText) findViewById(R.id.writeStadium);
+        teamName = (EditText) findViewById(R.id.writeName);
+        stadiumName = (EditText) findViewById(R.id.writeStadium);
 
         abilityrg = (RadioGroup) findViewById(R.id.abilityGroup);
         numberrg = (RadioGroup) findViewById(R.id.numberGroup);
@@ -48,7 +47,7 @@ public class Reservation extends AppCompatActivity {
         btnFinishDate = (Button) findViewById(R.id.btnFinishDate);
         btnFinishTime = (Button) findViewById(R.id.btnFinishTime);
 
-        ReservationValue reservationValue = new ReservationValue(tname, stname, SelectDate,
+        reservationValue = new ReservationValue(tname, stname, SelectDate,
                 SelectTime, FinishDate, FinishTime, abilitySelected, numberSelected);
 
 
@@ -62,6 +61,7 @@ public class Reservation extends AppCompatActivity {
                 finish();
             }
         });
+
 
 
         ok.setOnClickListener(new View.OnClickListener() {
@@ -85,22 +85,17 @@ public class Reservation extends AppCompatActivity {
                 reservationValue.setAbility(abilitySelected);
                 reservationValue.setNumber(numberSelected);
 
-                if (tname.trim().length() > 0
-
-
-                        && stname.trim().length() > 0) {
-
-                    items.add(0, new ReservationValue(tname, stname, SelectDate, SelectTime,
-                            FinishDate, FinishTime, abilitySelected, numberSelected));
+                if (tname.trim().length() > 0 && stname.trim().length() > 0) {
+                    check_click=1;
 
                     Intent intent = new Intent(getApplicationContext(), ReservationInfo.class);
                     intent.putExtra("reservationValue", reservationValue);
 
-
                     startActivity(intent);
+                    finish();
                 } else {
                     Toast.makeText(getApplicationContext(), "다시 입력하시오.",
-                            Toast.LENGTH_LONG).show();
+                            Toast.LENGTH_SHORT).show();
                 }
             }
         });
