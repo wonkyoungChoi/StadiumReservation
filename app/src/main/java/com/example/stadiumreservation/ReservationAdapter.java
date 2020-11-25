@@ -1,6 +1,11 @@
 package com.example.stadiumreservation;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -16,7 +21,6 @@ public class ReservationAdapter extends RecyclerView.Adapter<ReservationAdapter.
 
     //생성자에서 데이터 리스트 객체를 전달받음
     ReservationAdapter(ArrayList<ReservationValue> list) {items = list;}
-
 
     @NonNull
     @Override
