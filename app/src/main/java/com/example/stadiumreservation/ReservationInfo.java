@@ -24,7 +24,7 @@ public class ReservationInfo extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.reservation_result);
 
-        if(check_click==1) {
+        if (check_click == 1) {
             Intent intent = getIntent();
             ReservationValue reservationValue =
                     (ReservationValue) intent.getSerializableExtra("reservationValue");
@@ -51,22 +51,6 @@ public class ReservationInfo extends AppCompatActivity {
         ReservationAdapter adapter = new ReservationAdapter(list);
         recyclerView.setAdapter(adapter);
 
-        //스와이프하여 항목 삭제 기능
-        ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT | ItemTouchHelper.LEFT) {
-            @Override
-            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
-                return false;
-            }
-
-            @Override
-            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-                list.remove(viewHolder.getLayoutPosition());
-                adapter.notifyItemRemoved(viewHolder.getLayoutPosition());
-            }
-        };
-        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
-        itemTouchHelper.attachToRecyclerView(recyclerView);
-        }
-
 
     }
+}

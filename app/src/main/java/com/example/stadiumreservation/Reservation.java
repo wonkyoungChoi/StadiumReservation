@@ -22,6 +22,8 @@ public class Reservation extends AppCompatActivity {
     RadioGroup abilityrg;
     RadioGroup numberrg;
     static int check_click = 0;
+    int ability_click = 0;
+    int number_click = 0;
 
 
     String abilitySelected , numberSelected ;
@@ -78,23 +80,26 @@ public class Reservation extends AppCompatActivity {
                 reservationValue.setTeamName(tname);
                 reservationValue.setStadiumName(stname);
                 reservationValue.setStartDate(SelectDate);
-
                 reservationValue.setStartTime(SelectTime);
                 reservationValue.setFinishDate(FinishDate);
                 reservationValue.setFinishTime(FinishTime);
                 reservationValue.setAbility(abilitySelected);
                 reservationValue.setNumber(numberSelected);
 
-                if (tname.trim().length() > 0 && stname.trim().length() > 0) {
-                    check_click=1;
+                if (ability_click == 1 && number_click == 1 && tname.trim().length() > 0 && stname.trim().length() > 0
+                        && SelectDate.trim().length() > 4 && SelectTime.trim().length() > 4 && FinishDate.trim().length() > 4
+                        && FinishTime.trim().length() > 4 && abilitySelected.trim().length() > 0 && numberSelected.trim().length() > 0) {
+                    check_click = 1;
 
                     Intent intent = new Intent(getApplicationContext(), ReservationInfo.class);
+                    Intent intent1 = new Intent(getApplicationContext(), MyMatch.class);
                     intent.putExtra("reservationValue", reservationValue);
+                    intent1.putExtra("reservationValue", reservationValue);
 
                     startActivity(intent);
                     finish();
                 } else {
-                    Toast.makeText(getApplicationContext(), "다시 입력하시오.",
+                    Toast.makeText(getApplicationContext(), "모든 정보를 입력하시오.",
                             Toast.LENGTH_SHORT).show();
                 }
             }
@@ -102,6 +107,7 @@ public class Reservation extends AppCompatActivity {
     }
 
     public void abilityButtonClicked(View v){
+        ability_click=1;
         switch(v.getId()) {
             case R.id.ability1:
                 abilitySelected = "하";
@@ -137,6 +143,7 @@ public class Reservation extends AppCompatActivity {
     }
 
     public void numberButtonClicked(View v){
+        number_click=1;
         switch(v.getId()) {
             case R.id.number1:
                 numberSelected="5:5";
@@ -181,7 +188,7 @@ public class Reservation extends AppCompatActivity {
             TimePickerDialog timePickerDialog = new TimePickerDialog(this, android.R.style.Theme_Holo_Light_Dialog_NoActionBar, new TimePickerDialog.OnTimeSetListener() {
                 @Override
                 public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                    btnSelectTime.setText(hourOfDay + "시" + minute + "분");
+                    btnSelectTime.setText(hourOfDay + "시 " + minute + "분");
                 }
             }, mHour, mMinute, true);
             timePickerDialog.show();
@@ -210,7 +217,7 @@ public class Reservation extends AppCompatActivity {
             TimePickerDialog timePickerDialog = new TimePickerDialog(this, android.R.style.Theme_Holo_Light_Dialog_NoActionBar, new TimePickerDialog.OnTimeSetListener() {
                 @Override
                 public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                    btnFinishTime.setText(hourOfDay + "시" + minute + "분");
+                    btnFinishTime.setText(hourOfDay + "시 " + minute + "분");
                 }
             }, mHour, mMinute, true);
             timePickerDialog.show();
