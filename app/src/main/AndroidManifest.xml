@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.stadiumreservation">
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -11,10 +13,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.StadiumReservation">
-
-        <meta-data
-            android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyDuu5tx6r-fIIfQWxpb95ftZqOOqmLP57Y" />
 
         <activity android:name=".MainActivity">
             <intent-filter>
@@ -32,6 +30,11 @@
         <activity android:name=".Apply" android:label="Apply" />
         <activity android:name=".ReservationInfo" android:label="ReservationInfo" />
         <activity android:name=".ApplyInfo" android:label="ApplyInfo" />
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyDuu5tx6r-fIIfQWxpb95ftZqOOqmLP57Y" />
+
     </application>
 
 </manifest>

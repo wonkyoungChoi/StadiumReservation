@@ -51,6 +51,17 @@ public class ApplyInfo extends AppCompatActivity {
         match.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Apply.check_code=1;
+                Intent intent = new Intent(getApplicationContext(), Apply.class);
+                intent.putExtra("name", name);
+                intent.putExtra("stname", stname);
+                intent.putExtra("startDate", startDate);
+                intent.putExtra("startTime", startTime);
+                intent.putExtra("finishDate", finishDate);
+                intent.putExtra("finishTime", finishTime);
+                intent.putExtra("abil", abil);
+                intent.putExtra("num", num);
+                startActivity(intent);
             }
         });
 

@@ -109,8 +109,6 @@
                 android:text="매치 인원"
                 android:textSize="12sp" />
 
-
-
         </RelativeLayout>
     </androidx.cardview.widget.CardView>
 </LinearLayout>

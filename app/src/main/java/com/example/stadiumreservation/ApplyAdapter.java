@@ -1,5 +1,6 @@
 package com.example.stadiumreservation;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,8 @@ import java.util.ArrayList;
 
 public class ApplyAdapter extends RecyclerView.Adapter<ApplyAdapter.ViewHolder> {
 
+    ApplyAdapter(ArrayList<ReservationValue> list) {items = list;}
+
     public interface OnItemClickListener{
         void onItemClick(View v, int pos);
     }
@@ -19,9 +22,17 @@ public class ApplyAdapter extends RecyclerView.Adapter<ApplyAdapter.ViewHolder> 
 
     public void setOnItemClickListener(OnItemClickListener listener) {this.mListener = listener;}
 
-    ArrayList<ReservationValue> items = new ArrayList<>();
+    static ArrayList<ReservationValue> items = new ArrayList<>();
 
     public void addItem(ReservationValue item) {items.add(item);}
+
+    public void removeItem(int position) {
+        items.remove(position);
+        notifyItemRemoved(position);
+        notifyItemRangeChanged(position, items.size());
+    }
+
+
     public ReservationValue getItem(int position) {return items.get(position);}
 
     @NonNull

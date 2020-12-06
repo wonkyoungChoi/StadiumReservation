@@ -16,7 +16,6 @@ import java.util.ArrayList;
 
 public class ReservationInfo extends AppCompatActivity {
     int check_click = Reservation.check_click;
-    Button regist;
 
     static ArrayList<ReservationValue> list = new ArrayList<>();
 
@@ -32,16 +31,6 @@ public class ReservationInfo extends AppCompatActivity {
         }
 
 
-        regist = (Button) findViewById(R.id.regist);
-        regist.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), Reservation.class);
-                startActivity(intent);
-                finish();
-            }
-        });
-
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(this,
@@ -51,6 +40,23 @@ public class ReservationInfo extends AppCompatActivity {
         ReservationAdapter adapter = new ReservationAdapter(list);
         recyclerView.setAdapter(adapter);
 
+    }
 
+    public void onClicked(View v) {
+        Intent in = null;
+
+        switch(v.getId()) {
+            case R.id.regist :
+                in = new Intent(getApplicationContext(), Reservation.class);
+                break;
+            case R.id.goMenu_btn:
+                in = new Intent(getApplicationContext(), MainMenu.class);
+                break;
+            case R.id.myMatch_btn :
+                in = new Intent(getApplicationContext(), MyMatch.class);
+                break;
+        }
+        startActivity(in);
+        finish();
     }
 }
