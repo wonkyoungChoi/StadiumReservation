@@ -9,9 +9,14 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.ArrayList;
+
 public class ApplyInfo extends AppCompatActivity {
     TextView tName, stName, start, finish, ability, number;
     Button match, cancel;
+
+    int clicked_item = Apply.clicked_item;
+    ApplyAdapter adapter = new ApplyAdapter(ApplyAdapter.items);
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -51,16 +56,9 @@ public class ApplyInfo extends AppCompatActivity {
         match.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Apply.check_code=1;
+                adapter.removeItem(clicked_item);
+                finish();
                 Intent intent = new Intent(getApplicationContext(), Apply.class);
-                intent.putExtra("name", name);
-                intent.putExtra("stname", stname);
-                intent.putExtra("startDate", startDate);
-                intent.putExtra("startTime", startTime);
-                intent.putExtra("finishDate", finishDate);
-                intent.putExtra("finishTime", finishTime);
-                intent.putExtra("abil", abil);
-                intent.putExtra("num", num);
                 startActivity(intent);
             }
         });
@@ -68,7 +66,11 @@ public class ApplyInfo extends AppCompatActivity {
 
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) { finish(); }
+            public void onClick(View v) {
+                finish();
+                Intent intent = new Intent(getApplicationContext(), Apply.class);
+                startActivity(intent);
+            }
         });
 
     }

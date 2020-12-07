@@ -32,7 +32,6 @@ public class ApplyAdapter extends RecyclerView.Adapter<ApplyAdapter.ViewHolder> 
         notifyItemRangeChanged(position, items.size());
     }
 
-
     public ReservationValue getItem(int position) {return items.get(position);}
 
     @NonNull

@@ -14,43 +14,19 @@ import java.util.ArrayList;
 
 public class Apply extends AppCompatActivity {
 
-    static int check_code = -1;
     static int init_code = 1;
     static int clicked_item = -1;
-
-    String name;
-    String stname;
-    String startDate;
-    String startTime;
-    String finishDate;
-    String finishTime;
-    String abil;
-    String num;
-
-    ArrayList<ReservationValue> items = ApplyAdapter.items;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.apply);
-
-        if(check_code==1) {
-            Intent intent = getIntent();
-            name = intent.getExtras().getString("name", "");
-            stname = intent.getExtras().getString("stname", "");
-            startDate = intent.getExtras().getString("startDate", "");
-            startTime = intent.getExtras().getString("startTime", "");
-            finishDate = intent.getExtras().getString("finishDate", "");
-            finishTime = intent.getExtras().getString("finishTime", "");
-            abil = intent.getExtras().getString("abil", "");
-            num = intent.getExtras().getString("num", "");
-        }
 
         RecyclerView applyRecyclerview = findViewById(R.id.applyRecyclerView);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         applyRecyclerview.setLayoutManager(layoutManager);
 
-        ApplyAdapter adapter = new ApplyAdapter(items);
+        ApplyAdapter adapter = new ApplyAdapter(ApplyAdapter.items);
         if(init_code==1) {
             adapter.addItem(new ReservationValue("FC서울", "서울월드컵경기장", "2020.12.15", "12:00",
                     " 2020.12.15", "14:00", "중", "5:5"));
@@ -73,14 +49,12 @@ public class Apply extends AppCompatActivity {
             init_code = -1;
         }
 
-        if(check_code==1) {
-            adapter.removeItem(clicked_item);
-        }
 
         adapter.setOnItemClickListener(new ApplyAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View v, int pos) {
                 clicked_item = pos;
+                finish();
                 Intent intent = new Intent(getApplicationContext(), ApplyInfo.class);
                 intent.putExtra("applyValue", adapter.getItem(pos));
 
