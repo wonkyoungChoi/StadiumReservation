@@ -2,9 +2,12 @@ package com.example.stadiumreservation;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -21,10 +24,20 @@ import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 
-import java.util.Map;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Locale;
 
 public class Search extends AppCompatActivity
         implements OnMapReadyCallback {
@@ -32,19 +45,91 @@ public class Search extends AppCompatActivity
     private static final int REQUEST_CODE_PERMISSIONS = 1000;
     private GoogleMap mMap;
     private FusedLocationProviderClient mFusedLocationClient;
+    ArrayList<FootSalPlace> footsalList = new ArrayList<>();
+    LatLng myLocation;
+    List<Marker> previous_marker = null;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.search);
+
+        previous_marker = new ArrayList<Marker>();
+
+        //장소검색 버튼 Click
+        Button button = (Button)findViewById(R.id.button);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mMap.clear();
+                jsonParsing(getJsonString());
+            }
+        });
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
-
     }
 
+
+    private String getJsonString()
+    {
+        String json = "";
+
+        try {
+            InputStream is = getAssets().open("footsal.json");
+            int fileSize = is.available();
+
+            byte[] buffer = new byte[fileSize];
+            is.read(buffer);
+            is.close();
+
+            json = new String(buffer, "UTF-8");
+        }
+        catch (IOException ex)
+        {
+            ex.printStackTrace();
+        }
+
+        return json;
+    }
+
+    private void jsonParsing(String json)
+    {
+        try{
+            JSONObject jsonObject = new JSONObject(json);
+
+            JSONArray footsalArray = jsonObject.getJSONArray("Stadiums");
+
+            for(int i=0; i<footsalArray.length(); i++)
+            {
+                JSONObject footsalObject = footsalArray.getJSONObject(i);
+
+                FootSalPlace footsal = new FootSalPlace();
+
+                footsal.setName(footsalObject.getString("name"));
+                footsal.setLatitude(footsalObject.getDouble("latitude"));
+                footsal.setLongitude(footsalObject.getDouble("longitude"));
+                footsal.setAddress(footsalObject.getString("address"));
+
+                LatLng latLng
+                        = new LatLng(footsal.getLatitude()
+                        , footsal.getLongitude());
+
+                MarkerOptions markerOptions = new MarkerOptions();
+                markerOptions.position(latLng)
+                        .title(footsal.getName())
+                        .snippet(footsal.getAddress());
+
+                Marker item = mMap.addMarker(markerOptions);
+                previous_marker.add(item);
+
+            }
+        }catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
@@ -70,7 +155,9 @@ public class Search extends AppCompatActivity
             @Override
             public void onSuccess(Location location) {
                 if (location != null) {
-                    LatLng myLocation = new LatLng(location.getLatitude(), location.getLongitude());
+                    if (mMap != null)
+                        mMap.clear();//지역정보 마커 클리어
+                    myLocation = new LatLng(location.getLatitude(), location.getLongitude());
                     mMap.addMarker(new MarkerOptions()
                     .position(myLocation)
                     .title("현재 위치"));
@@ -93,4 +180,5 @@ public class Search extends AppCompatActivity
                 }
         }
     }
+
 }

@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@drawable/background"
     android:orientation="vertical">
 
     <TextView
@@ -126,20 +127,24 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
-        <Button
+        <android.widget.Button
             android:id="@+id/match"
             android:layout_marginTop="20dp"
             android:layout_marginStart="80dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="#292A2E"
+            android:textColor="#CDC5C5"
             android:text="신청하기" />
 
-        <Button
+        <android.widget.Button
             android:id="@+id/applyCancel"
             android:layout_marginTop="20dp"
             android:layout_marginStart="80dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="#292A2E"
+            android:textColor="#CDC5C5"
             android:text="취소하기" />
     </LinearLayout>
 </LinearLayout>

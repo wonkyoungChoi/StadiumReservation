@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background"
     android:orientation="vertical">
 
 
@@ -9,9 +10,12 @@
         android:id="@+id/userHello"
         android:gravity="right"
         android:layout_marginTop="10dp"
+        android:layout_marginEnd="5dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Hello"
+        android:textColor="#000000"
+        android:textStyle="bold"
         android:textSize="12sp" />
 
     <TextView
@@ -20,48 +24,57 @@
         android:layout_marginTop="40dp"
         android:gravity="center"
         android:text="경기장 매치 예약 어플"
-        android:textSize="40sp" />
+        android:textColor="#000000"
+        android:textSize="40sp"
+        android:textStyle="bold" />
 
 
-    <Button
+    <android.widget.Button
         android:id="@+id/search"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="70dp"
+        android:layout_marginTop="60dp"
         android:onClick="onClicked"
         android:text="경기장 검색"
+        android:background="#292A2E"
+        android:textColor="#CDC5C5"
         android:textSize="30sp" />
 
-    <Button
+    <android.widget.Button
         android:id="@+id/reservation"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="60dp"
         android:onClick="onClicked"
         android:text="매치 예약"
+        android:background="#292A2E"
+        android:textColor="#CDC5C5"
         android:textSize="30sp" />
 
-    <Button
+    <android.widget.Button
         android:id="@+id/apply"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="60dp"
         android:onClick="onClicked"
         android:text="매치 찾기"
+        android:background="#292A2E"
+        android:textColor="#CDC5C5"
         android:textSize="30sp" />
 
-    <Button
+    <android.widget.Button
         android:id="@+id/mymatch"
         android:onClick="onClicked"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="60dp"
         android:text="내 예약정보"
+        android:background="#292A2E"
+        android:textColor="#CDC5C5"
         android:textSize="30sp" />
-
 
 </LinearLayout>

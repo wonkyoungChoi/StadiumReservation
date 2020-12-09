@@ -17,6 +17,13 @@ import java.util.ArrayList;
 
 public class ReservationAdapter extends RecyclerView.Adapter<ReservationAdapter.ViewHolder>{
 
+    public interface OnItemClickListener{
+        void onItemClick(View v, int pos);
+    }
+    private ApplyAdapter.OnItemClickListener mListener = null;
+
+    public void setOnItemClickListener(ApplyAdapter.OnItemClickListener listener) {this.mListener = listener;}
+
     static ArrayList<ReservationValue> items = null;
 
     //생성자에서 데이터 리스트 객체를 전달받음
@@ -65,6 +72,18 @@ public class ReservationAdapter extends RecyclerView.Adapter<ReservationAdapter.
             FinTime = itemView.findViewById(R.id.finishTime1);
             abil = itemView.findViewById(R.id.ability1);
             num = itemView.findViewById(R.id.number);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int pos = getAdapterPosition();
+                    if(pos != RecyclerView.NO_POSITION) {
+                        if(mListener != null) {
+                            mListener.onItemClick(v, pos);
+                        }
+                    }
+                }
+            });
 
         }
 

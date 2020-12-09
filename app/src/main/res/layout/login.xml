@@ -2,6 +2,7 @@
 <LinearLayout android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@drawable/background"
     xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <TextView
@@ -10,58 +11,69 @@
         android:layout_marginTop="40dp"
         android:gravity="center"
         android:text="경기장 매치 예약 어플"
+        android:textColor="#000000"
+        android:textStyle="bold"
         android:textSize="40dp" />
 
 
     <TextView
-        android:layout_marginTop="50dp"
-        android:layout_gravity="center"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="50dp"
         android:text="로그인 하기"
+        android:textStyle="bold"
+        android:textColor="#000000"
         android:textSize="30dp" />
 
     <EditText
         android:id="@+id/username"
-        android:layout_gravity="center"
-        android:layout_marginTop="50dp"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="50dp"
+        android:backgroundTint="#000000"
         android:hint="username">
+
         <requestFocus></requestFocus>
     </EditText>
 
     <EditText
         android:id="@+id/password"
-        android:inputType="textPassword"
-        android:layout_gravity="center"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp" />
+        android:layout_gravity="center"
+        android:layout_marginTop="30dp"
+        android:backgroundTint="#000000"
+        android:inputType="textPassword" />
 
     <LinearLayout
         android:layout_marginTop="50dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <Button
+        <android.widget.Button
             android:id="@+id/loginbtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="0.5"
             android:text="로그인"
+            android:background="#292A2E"
+            android:textColor="#CDC5C5"
             android:layout_marginStart="50dp">
-        </Button>
+        </android.widget.Button>
 
-        <Button
+        <android.widget.Button
             android:id="@+id/cancelbtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="취소"
+            android:background="#292A2E"
+            android:textColor="#CDC5C5"
             android:layout_weight="0.5"
             android:layout_marginEnd="50dp"
             android:layout_marginStart="20dp">
-        </Button>
+        </android.widget.Button>
 
     </LinearLayout>
     <LinearLayout
@@ -75,7 +87,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="50dp"
-            android:text="아이디/비밀번호 찾기" />
+            android:foregroundTint="#000000"
+            android:text="아이디/비밀번호 찾기"
+            android:textColor="#000000" />
         <View
             android:layout_width="0dp"
             android:layout_height="0dp"
@@ -85,9 +99,10 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="right"
             android:layout_marginEnd="50dp"
-            android:text="회원가입" />
+            android:gravity="right"
+            android:text="회원가입"
+            android:textColor="#000000" />
 
     </LinearLayout>
 

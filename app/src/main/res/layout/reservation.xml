@@ -1,241 +1,288 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_gravity="center"
-    xmlns:android="http://schemas.android.com/apk/res/android">
-<LinearLayout
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-
-    <TextView
-        android:layout_marginStart="10dp"
-        android:id="@+id/teamName"
-        android:layout_marginTop="10dp"
-        android:textSize="20sp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="팀 이름">
-
-    </TextView>
-
-    <EditText
-        android:layout_marginStart="10dp"
-        android:id="@+id/writeName"
-        android:layout_marginTop="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="팀이름">
-        <requestFocus></requestFocus>
-    </EditText>
-
-    <TextView
-        android:layout_marginStart="10dp"
-        android:id="@+id/stadiumName"
-        android:layout_marginTop="10dp"
-        android:textSize="20sp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="예약구장" />
-
-    <EditText
-        android:layout_marginStart="10dp"
-        android:id="@+id/writeStadium"
-        android:layout_marginTop="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="예약구장" />
-
-    <TextView
-        android:id="@+id/startTime"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        android:textSize="20sp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="시작시간" />
+    android:layout_gravity="center">
 
     <LinearLayout
-        android:layout_marginTop="10dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-    <Button
-        android:id="@+id/btnSelectDate"
-        android:layout_marginStart="10dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="onClicked"
-        android:text="날짜설정" />
-
-    <Button
-        android:id="@+id/btnSelectTime"
-        android:layout_marginStart="20dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="onClicked"
-        android:text="시간설정" />
-
-    </LinearLayout>
-
-    <TextView
-        android:id="@+id/finishTime"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        android:textSize="20sp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="종료시간" />
+        android:background="@drawable/background"
+        android:orientation="vertical">
 
-    <LinearLayout
-        android:layout_marginTop="10dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <Button
-            android:id="@+id/btnFinishDate"
-            android:layout_marginStart="10dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="onClicked"
-            android:text="날짜설정" />
-
-        <Button
-            android:id="@+id/btnFinishTime"
-            android:layout_marginStart="20dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="onClicked"
-            android:text="시간설정" />
-
-    </LinearLayout>
-
-    <TextView
-        android:id="@+id/ability0"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        android:textSize="20sp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="실력" />
-
-    <RadioGroup
-        android:id="@+id/abilityGroup"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <RadioButton
-            android:id="@+id/ability1"
-            android:layout_marginStart="10dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="abilityButtonClicked"
-            android:text="하"/>
-        <RadioButton
-            android:id="@+id/ability2"
-            android:layout_marginStart="10dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="abilityButtonClicked"
-            android:text="중하"/>
-        <RadioButton
-            android:id="@+id/ability3"
-            android:layout_marginStart="10dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="abilityButtonClicked"
-            android:text="중"/>
-        <RadioButton
-            android:id="@+id/ability4"
-            android:layout_marginStart="10dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="abilityButtonClicked"
-            android:text="중상"/>
-        <RadioButton
-            android:id="@+id/ability5"
-            android:layout_marginStart="10dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="abilityButtonClicked"
-            android:text="상"/>
-        <RadioButton
-            android:id="@+id/ability6"
-            android:layout_marginStart="10dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="abilityButtonClicked"
-            android:text="무관"/>
-
-    </RadioGroup>
-
-    <TextView
-        android:id="@+id/number"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        android:textSize="20sp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="인원" />
-
-    <RadioGroup
-        android:id="@+id/numberGroup"
-        android:layout_marginTop="10dp"
-        android:layout_marginStart="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <RadioButton
-            android:id="@+id/number1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="numberButtonClicked"
-            android:text="5:5"/>
-        <RadioButton
-            android:id="@+id/number2"
-            android:layout_marginStart="20dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="numberButtonClicked"
-            android:text="6:6"/>
-        <RadioButton
-            android:id="@+id/number3"
-            android:layout_marginStart="20dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="numberButtonClicked"
-            android:text="무관"/>
-    </RadioGroup>
-
-    <LinearLayout
-        android:layout_marginTop="30dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <Button
-            android:id="@+id/ok"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
-            android:layout_weight="1"
+        <TextView
+            android:id="@+id/teamName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="등록하기" />
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:text="팀 이름"
+            android:textColor="#202020"
+            android:textSize="25sp"
+            android:textStyle="bold">
 
-        <Button
-            android:id="@+id/cancel"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
-            android:layout_weight="1"
+        </TextView>
+
+        <EditText
+            android:id="@+id/writeName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="메뉴로 가기" />
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:hint="팀이름">
+
+            <requestFocus></requestFocus>
+        </EditText>
+
+        <TextView
+            android:id="@+id/stadiumName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:text="예약구장"
+            android:textColor="#202020"
+            android:textStyle="bold"
+            android:textSize="25sp" />
+
+        <EditText
+            android:id="@+id/writeStadium"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:backgroundTint="#000000"
+            android:hint="예약구장" />
+
+        <TextView
+            android:id="@+id/startTime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:backgroundTint="#000000"
+            android:text="시작시간"
+            android:textColor="#202020"
+            android:textStyle="bold"
+            android:textSize="25sp" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
+
+            <android.widget.Button
+                android:id="@+id/btnSelectDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:onClick="onClicked"
+                android:background="#292A2E"
+                android:textColor="#CDC5C5"
+                android:text="날짜설정" />
+
+            <android.widget.Button
+                android:id="@+id/btnSelectTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:onClick="onClicked"
+                android:background="#292A2E"
+                android:textColor="#CDC5C5"
+                android:text="시간설정" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/finishTime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:text="종료시간"
+            android:textColor="#202020"
+            android:textStyle="bold"
+            android:textSize="25sp" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
+
+            <android.widget.Button
+                android:id="@+id/btnFinishDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:onClick="onClicked"
+                android:background="#292A2E"
+                android:textColor="#CDC5C5"
+                android:text="날짜설정" />
+
+            <android.widget.Button
+                android:id="@+id/btnFinishTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:onClick="onClicked"
+                android:background="#292A2E"
+                android:textColor="#CDC5C5"
+                android:text="시간설정" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/ability0"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:text="실력"
+            android:textColor="#202020"
+            android:textStyle="bold"
+            android:textSize="25sp" />
+
+        <RadioGroup
+            android:id="@+id/abilityGroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/ability1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:buttonTint="#DFD2D2"
+                android:onClick="abilityButtonClicked"
+                android:text="하" />
+
+            <RadioButton
+                android:id="@+id/ability2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:buttonTint="#DFD2D2"
+                android:onClick="abilityButtonClicked"
+                android:text="중하" />
+
+            <RadioButton
+                android:id="@+id/ability3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:buttonTint="#DFD2D2"
+                android:onClick="abilityButtonClicked"
+                android:text="중" />
+
+            <RadioButton
+                android:id="@+id/ability4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:buttonTint="#DFD2D2"
+                android:onClick="abilityButtonClicked"
+                android:text="중상" />
+
+            <RadioButton
+                android:id="@+id/ability5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:buttonTint="#DFD2D2"
+                android:onClick="abilityButtonClicked"
+                android:text="상" />
+
+            <RadioButton
+                android:id="@+id/ability6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:buttonTint="#DFD2D2"
+                android:onClick="abilityButtonClicked"
+                android:text="무관" />
+
+        </RadioGroup>
+
+        <TextView
+            android:id="@+id/number"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:text="인원"
+            android:textColor="#202020"
+            android:textStyle="bold"
+            android:textSize="25sp" />
+
+        <RadioGroup
+            android:id="@+id/numberGroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/number1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:buttonTint="#DFD2D2"
+                android:onClick="numberButtonClicked"
+                android:text="5:5" />
+
+            <RadioButton
+                android:id="@+id/number2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:buttonTint="#DFD2D2"
+                android:onClick="numberButtonClicked"
+                android:text="6:6" />
+
+            <RadioButton
+                android:id="@+id/number3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:buttonTint="#DFD2D2"
+                android:onClick="numberButtonClicked"
+                android:text="무관" />
+        </RadioGroup>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="15dp"
+            android:orientation="horizontal">
+
+            <android.widget.Button
+                android:id="@+id/ok"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_weight="1"
+                android:background="#292A2E"
+                android:textColor="#CDC5C5"
+                android:text="등록하기" />
+
+            <android.widget.Button
+                android:id="@+id/cancel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_weight="1"
+                android:background="#292A2E"
+                android:textColor="#CDC5C5"
+                android:text="메뉴로 가기" />
+
+        </LinearLayout>
+
 
     </LinearLayout>
-
-
-</LinearLayout>
 </ScrollView>

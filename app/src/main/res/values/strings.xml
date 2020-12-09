@@ -1,7 +1,22 @@
 <resources>
     <string name="app_name">StadiumReservation</string>
     <string name="Information3">* 다음으로 원하는 매치를 검색하거나 매치를 등록하거나 \n  내가 신청 또는 성사된 매치를 확인할 수 있습니다.</string>
-    <string name="Information2">* 먼저 시작 페이지에서 로그인을 합니다. \n   여기서 로그인 정보는 사용자 이름, 비밀번호를 받습니다.</string>
+    <string name="Information2">* 먼저 시작 페이지에서 로그인을 합니다. \n   여기서 로그인 정보는 사용자 이름과 비밀번호를 받습니다.</string>
     <string name="Information1">이 어플리케이션은 경기장을 예약하고\n매치를 잡는 어플입니다.</string>
-    <string name="Information4"><![CDATA[*  ‘→’, ‘←’를 눌러 다음설명으로 이동하세요.]]></string>
+    <string name="Information4">* 옆으로 넘겨서 화면을 이동하세요.</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="Information5">* 로그인을 하시면 경기장 검색, 매치예약, \n 매치찾기, 내 예약정보가 있습니다.</string>
+    <string name="Information6">* 현재 위치를 누르시면 내 위치를 검색할 수 있습니다.</string>
+    <string name="Information7">* 내 위치를 검색한 후 풋살장 찾기를 누르시면 \n 내 주변의 풋살장을 찾을 수 있습니다.</string>
+    <string name="Information8">* 주변 풋살장을 검색하신 후 예약을 하세요.</string>
+    <string name="Information9">* 원하시는 경기장의 매치를 등록할 수 있는 곳입니다.</string>
+    <string name="Information10">* 팀 이름, 예약구장, 날짜와 시간, 실력, 인원을 \n 설정하시고 등록하세요.</string>
+    <string name="Information11">* 예약하신 매치는 내 매치예약에서 관리하실 수 있습니다.</string>
+    <string name="Information12">* 상대가 예약한 매치들을 둘러보고 신청하실 수 있는 곳입니다.</string>
+    <string name="Information13">* 상대가 등록한 매치의 상세정보는 클릭해서 보세요.</string>
+    <string name="Information14">* 마음에 드는 매치를 상세정보에서 신청하세요.</string>
+    <string name="Information15">* 예약하신 정보들을 확인하고 관리하는 곳입니다.</string>
+    <string name="Information16">* 예약하신 매치를 취소하시려면 옆으로 슬라이드하세요.</string>
+    <string name="Information17">* 예약한 매치의 상세정보를 클릭하셔서 볼 수 있습니다.</string>
 </resources>
