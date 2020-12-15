@@ -20,14 +20,23 @@ public class ReservationAdapter extends RecyclerView.Adapter<ReservationAdapter.
     public interface OnItemClickListener{
         void onItemClick(View v, int pos);
     }
-    private ApplyAdapter.OnItemClickListener mListener = null;
+    private ReservationAdapter.OnItemClickListener mListener = null;
 
-    public void setOnItemClickListener(ApplyAdapter.OnItemClickListener listener) {this.mListener = listener;}
+    public void setOnItemClickListener(ReservationAdapter.OnItemClickListener listener) {this.mListener = listener;}
 
     static ArrayList<ReservationValue> items = null;
 
     //생성자에서 데이터 리스트 객체를 전달받음
     ReservationAdapter(ArrayList<ReservationValue> list) {items = list;}
+    public void addItem(ReservationValue item) {items.add(item);}
+
+    public ReservationValue getItem(int position) {return items.get(position);}
+
+    public void removeItem(int position) {
+        items.remove(position);
+        notifyItemRemoved(position);
+        notifyItemRangeChanged(position, items.size());
+    }
 
     @NonNull
     @Override

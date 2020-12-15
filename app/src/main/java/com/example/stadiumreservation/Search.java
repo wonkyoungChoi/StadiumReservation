@@ -72,7 +72,7 @@ public class Search extends AppCompatActivity
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
     }
 
-
+    //Json의 값을 가져옴
     private String getJsonString()
     {
         String json = "";
@@ -95,6 +95,7 @@ public class Search extends AppCompatActivity
         return json;
     }
 
+    //Json Parsing
     private void jsonParsing(String json)
     {
         try{
@@ -131,17 +132,17 @@ public class Search extends AppCompatActivity
         }
     }
 
+    //map의 첫 위치
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
         LatLng mjc = new LatLng(37.584174, 126.924533);
-        mMap.addMarker(new MarkerOptions().position(mjc).title("명지전문대학"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(mjc));
         mMap.animateCamera(CameraUpdateFactory.zoomTo(12.0f));
     }
 
-
+    //현재 위치 클릭했을 경우
     public void onLastLocationButtonClicked(View view) {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager
                 .PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) !=
@@ -156,7 +157,7 @@ public class Search extends AppCompatActivity
             public void onSuccess(Location location) {
                 if (location != null) {
                     if (mMap != null)
-                        mMap.clear();//지역정보 마커 클리어
+                        mMap.clear();
                     myLocation = new LatLng(location.getLatitude(), location.getLongitude());
                     mMap.addMarker(new MarkerOptions()
                     .position(myLocation)

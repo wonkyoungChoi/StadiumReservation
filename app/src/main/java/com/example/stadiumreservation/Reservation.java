@@ -1,5 +1,6 @@
 package com.example.stadiumreservation;
 
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
@@ -13,30 +14,25 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 
 public class Reservation extends AppCompatActivity {
     RadioGroup abilityrg;
     RadioGroup numberrg;
-    static int check_click = 0;
     int ability_click = 0;
     int number_click = 0;
-
 
     String abilitySelected , numberSelected ;
     Button btnSelectDate, btnSelectTime, btnFinishDate, btnFinishTime, ok, cancel;
     String tname, stname, SelectDate, SelectTime, FinishDate, FinishTime;
     EditText teamName, stadiumName;
 
-    ReservationValue reservationValue;
+    static ReservationValue reservationValue;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.reservation);
-
 
         teamName = (EditText) findViewById(R.id.writeName);
         stadiumName = (EditText) findViewById(R.id.writeStadium);
@@ -51,21 +47,18 @@ public class Reservation extends AppCompatActivity {
 
         reservationValue = new ReservationValue(tname, stname, SelectDate,
                 SelectTime, FinishDate, FinishTime, abilitySelected, numberSelected);
-
-
-
+        ReservationAdapter adapter;
         ok = (Button) findViewById(R.id.ok);
         cancel = (Button) findViewById(R.id.cancel);
 
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                finish();
+            public void onClick(View view){
+            finish();
             }
         });
 
-
-
+        //등록하기 버튼 클릭
         ok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -89,12 +82,9 @@ public class Reservation extends AppCompatActivity {
                 if (ability_click == 1 && number_click == 1 && tname.trim().length() > 0 && stname.trim().length() > 0
                         && SelectDate.trim().length() > 4 && SelectTime.trim().length() > 4 && FinishDate.trim().length() > 4
                         && FinishTime.trim().length() > 4 && abilitySelected.trim().length() > 0 && numberSelected.trim().length() > 0) {
-                    check_click = 1;
 
                     Intent intent = new Intent(getApplicationContext(), ReservationInfo.class);
-                    Intent intent1 = new Intent(getApplicationContext(), MyMatch.class);
                     intent.putExtra("reservationValue", reservationValue);
-                    intent1.putExtra("reservationValue", reservationValue);
 
                     startActivity(intent);
                     finish();
@@ -106,6 +96,7 @@ public class Reservation extends AppCompatActivity {
         });
     }
 
+    @SuppressLint("NonConstantResourceId")
     public void abilityButtonClicked(View v){
         ability_click=1;
         switch(v.getId()) {
@@ -142,6 +133,7 @@ public class Reservation extends AppCompatActivity {
         }
     }
 
+    @SuppressLint("NonConstantResourceId")
     public void numberButtonClicked(View v){
         number_click=1;
         switch(v.getId()) {
@@ -173,6 +165,7 @@ public class Reservation extends AppCompatActivity {
             int mDay = c.get(Calendar.DAY_OF_MONTH);
 
             DatePickerDialog datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
+                @SuppressLint("SetTextI18n")
                 @Override
                 public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                     btnSelectDate.setText(year + "년 " + monthOfYear + "월 " + dayOfMonth + "일");
@@ -186,6 +179,7 @@ public class Reservation extends AppCompatActivity {
             int mMinute = 0;
 
             TimePickerDialog timePickerDialog = new TimePickerDialog(this, android.R.style.Theme_Holo_Light_Dialog_NoActionBar, new TimePickerDialog.OnTimeSetListener() {
+                @SuppressLint("SetTextI18n")
                 @Override
                 public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                     btnSelectTime.setText(hourOfDay + "시 " + minute + "분");
@@ -201,6 +195,7 @@ public class Reservation extends AppCompatActivity {
             int mDay = c.get(Calendar.DAY_OF_MONTH);
 
             DatePickerDialog datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
+                @SuppressLint("SetTextI18n")
                 @Override
                 public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                     btnFinishDate.setText(year + "년 " + monthOfYear + "월 " + dayOfMonth + "일");
@@ -215,9 +210,10 @@ public class Reservation extends AppCompatActivity {
             int mMinute = 0;
 
             TimePickerDialog timePickerDialog = new TimePickerDialog(this, android.R.style.Theme_Holo_Light_Dialog_NoActionBar, new TimePickerDialog.OnTimeSetListener() {
+                @SuppressLint("SetTextI18n")
                 @Override
                 public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                    btnFinishTime.setText(hourOfDay + "시 " + minute + "분");
+                    btnFinishTime.setText(hourOfDay + "시 " + minute  + "분");
                 }
             }, mHour, mMinute, true);
             timePickerDialog.show();

@@ -16,6 +16,10 @@ public class ApplyInfo extends AppCompatActivity {
     Button match, cancel;
 
     int clicked_item = Apply.clicked_item;
+
+    ArrayList<ReservationValue> list = ApplyAdapter.items;
+    static ArrayList<ReservationValue> list2 = MyMatch.list;
+
     ApplyAdapter adapter = new ApplyAdapter(ApplyAdapter.items);
 
     @SuppressLint("SetTextI18n")
@@ -36,26 +40,17 @@ public class ApplyInfo extends AppCompatActivity {
         Intent intent = getIntent();
         ReservationValue reservationValue = (ReservationValue) intent.getSerializableExtra("applyValue");
 
-        String name = reservationValue.getTeamName();
-        String stname = reservationValue.getStadiumName();
-        String startDate = reservationValue.getStartDate();
-        String startTime = reservationValue.getStartTime();
-        String finishDate = reservationValue.getFinishDate();
-        String finishTime = reservationValue.getFinishTime();
-        String abil = reservationValue.getAbility();
-        String num = reservationValue.getNumber();
+        list.add(reservationValue);
 
-        tName.setText(name);
-        stName.setText(stname);
-        start.setText(startDate + " " + startTime);
-        finish.setText(finishDate + " " + finishTime);
-        ability.setText(abil);
-        number.setText(num);
-
-
+        //신청하기 클릭
         match.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                //내 매치정보의 리스트에 추가
+                list2.add(reservationValue);
+
+                //Apply에서 가져온 position값을 통해 삭제
                 adapter.removeItem(clicked_item);
                 finish();
                 Intent intent = new Intent(getApplicationContext(), Apply.class);

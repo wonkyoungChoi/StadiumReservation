@@ -15,22 +15,23 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 public class ReservationInfo extends AppCompatActivity {
-    int check_click = Reservation.check_click;
 
     static ArrayList<ReservationValue> list = new ArrayList<>();
+    ArrayList<ReservationValue> list2 = MyMatch.list;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.reservation_result);
 
-        if (check_click == 1) {
-            Intent intent = getIntent();
-            ReservationValue reservationValue =
-                    (ReservationValue) intent.getSerializableExtra("reservationValue");
-            list.add(reservationValue);
-        }
-
-
+        //입력한 값 받아오기
+        Intent intent = getIntent();
+        ReservationValue reservationValue =
+                (ReservationValue) intent.getSerializableExtra("reservationValue");
+        
+        //list에 추가
+        list.add(reservationValue);
+        list2.add(reservationValue);
+        
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(this,

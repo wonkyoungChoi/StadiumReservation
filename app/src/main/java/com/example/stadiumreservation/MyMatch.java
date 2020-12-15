@@ -16,7 +16,10 @@ import java.util.ArrayList;
 
 public class MyMatch extends AppCompatActivity {
 
-    ArrayList<ReservationValue> list = ReservationInfo.list;
+    static int clicked_item;
+    Button menuClick;
+
+    static ArrayList<ReservationValue> list = new ArrayList<>();
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,6 +33,28 @@ public class MyMatch extends AppCompatActivity {
 
         ReservationAdapter adapter = new ReservationAdapter(list);
         recyclerView.setAdapter(adapter);
+
+        //리사이클러뷰 아이템 클릭
+        adapter.setOnItemClickListener(new ReservationAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View v, int pos) {
+                clicked_item = pos;
+                finish();
+                Intent intent = new Intent(getApplicationContext(), MyMatchInfo.class);
+                intent.putExtra("ReservationValue", adapter.getItem(pos));
+
+                startActivity(intent);
+            }
+        });
+
+        //메뉴 가기 클릭
+        menuClick = (Button) findViewById(R.id.goMenu_btn);
+        menuClick.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         //스와이프하여 항목 삭제 기능
         ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT | ItemTouchHelper.LEFT) {

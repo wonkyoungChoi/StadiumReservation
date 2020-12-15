@@ -21,6 +21,7 @@ public class LoginActivity extends AppCompatActivity {
         Button login = (Button) findViewById(R.id.loginbtn);
         Button cancel = (Button) findViewById(R.id.cancelbtn);
 
+        //취소 버튼 클릭
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -28,6 +29,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+        //로그인 버튼 클릭
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
