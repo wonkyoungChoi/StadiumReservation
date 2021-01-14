@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.stadiumreservation">
+
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -13,7 +14,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.StadiumReservation">
-
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,21 +21,42 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Information" android:label="Information"/>
-        <activity android:name=".LoginActivity" android:label="LoginActivity"/>
-        <activity android:name=".MainMenu" android:label="MainMenu"/>
-        <activity android:name=".Reservation" android:label="Reservation"/>
-        <activity android:name=".Search" android:label="Search" />
-        <activity android:name=".MyMatch" android:label="MyMatch" />
-        <activity android:name=".Apply" android:label="Apply" />
-        <activity android:name=".ReservationInfo" android:label="ReservationInfo" />
-        <activity android:name=".ApplyInfo" android:label="ApplyInfo" />
-        <activity android:name=".MyMatchInfo" android:label="MyMatchInfo" />
+        <activity
+            android:name=".Information"
+            android:label="Information" />
+        <activity
+            android:name=".LoginActivity"
+            android:label="LoginActivity" />
+        <activity
+            android:name=".MainMenu"
+            android:label="MainMenu" />
+        <activity
+            android:name=".Reservation"
+            android:label="Reservation" />
+        <activity
+            android:name=".Search"
+            android:label="Search" />
+        <activity
+            android:name=".MyMatch"
+            android:label="MyMatch" />
+        <activity
+            android:name=".Apply"
+            android:label="Apply" />
+        <activity
+            android:name=".ReservationInfo"
+            android:label="ReservationInfo" />
+        <activity
+            android:name=".ApplyInfo"
+            android:label="ApplyInfo" />
+        <activity
+            android:name=".MyMatchInfo"
+            android:label="MyMatchInfo" />
+        <activity android:name=".Regist" />
+
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyDuu5tx6r-fIIfQWxpb95ftZqOOqmLP57Y" />
-
     </application>
 
 </manifest>

@@ -5,21 +5,27 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 public class LoginActivity extends AppCompatActivity {
+    EditText username, password;
+    Button login, cancel;
+    TextView regist, findId;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
 
-        EditText username = (EditText) findViewById(R.id.username);
+        username = (EditText) findViewById(R.id.username);
 
-        EditText password = (EditText) findViewById(R.id.password);
-        Button login = (Button) findViewById(R.id.loginbtn);
-        Button cancel = (Button) findViewById(R.id.cancelbtn);
+        password = (EditText) findViewById(R.id.password);
+        login = (Button) findViewById(R.id.loginbtn);
+        cancel = (Button) findViewById(R.id.cancelbtn);
+        regist = (TextView) findViewById(R.id.regist);
+        findId = (TextView) findViewById(R.id.findId);
 
         //취소 버튼 클릭
         cancel.setOnClickListener(new View.OnClickListener() {
@@ -46,5 +52,14 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         });
+
+        regist.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), Regist.class);
+                startActivity(intent);
+            }
+        });
+
     }
 }
