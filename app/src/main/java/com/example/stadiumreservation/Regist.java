@@ -20,7 +20,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 public class Regist extends AppCompatActivity {
-    EditText id, password, nickname;
+    EditText id, password, nickname, passwordCheck;
     Button regist, cancel;
 
     @Override
@@ -30,10 +30,10 @@ public class Regist extends AppCompatActivity {
 
         id = findViewById(R.id.id);
         password = findViewById(R.id.password);
+        passwordCheck = findViewById(R.id.passwordCheck);
         nickname = findViewById(R.id.nickname);
         regist = findViewById(R.id.regist_button);
         cancel = findViewById(R.id.cancel_button);
-
 
         regist.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -41,7 +41,9 @@ public class Regist extends AppCompatActivity {
                 String userid = id.getText().toString();
                 String userPassword = password.getText().toString();
                 String userNickname = nickname.getText().toString();
-                if(userid.trim().length()>0  && userPassword.trim().length()>0 && userNickname.trim().length()>0) {
+                String passwordcheck = passwordCheck.getText().toString();
+                if(userid.trim().length()>0  && userPassword.trim().length()>0 && userNickname.trim().length()>0
+                        && userPassword.equals(passwordcheck)) {
                     try {
                         String result;
                         CustomTask task = new CustomTask();
@@ -55,7 +57,10 @@ public class Regist extends AppCompatActivity {
                     Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
                     startActivity(intent);
                     finish();
-                } else {
+                } else if (!userPassword.equals(passwordcheck)){
+                    Toast.makeText(getApplicationContext(), "비밀번호가 일치하지 않습니다.", Toast.LENGTH_SHORT).show();
+                }
+                else {
                     Toast.makeText(getApplicationContext(), "모든 정보를 입력해주세요.", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -85,7 +90,7 @@ public class Regist extends AppCompatActivity {
                 osw.write(sendMsg);
                 osw.flush();
                 if(conn.getResponseCode() == conn.HTTP_OK) {
-                    InputStreamReader tmp = new InputStreamReader(conn.getInputStream(), "EUC-KR");
+                    InputStreamReader tmp = new InputStreamReader(conn.getInputStream(), "UTF-8");
                     BufferedReader reader = new BufferedReader(tmp);
                     StringBuffer buffer = new StringBuffer();
                     while ((str = reader.readLine()) != null) {
