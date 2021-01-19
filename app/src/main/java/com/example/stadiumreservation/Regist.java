@@ -48,15 +48,24 @@ public class Regist extends AppCompatActivity {
                         String result;
                         CustomTask task = new CustomTask();
                         result = task.execute(userid,userPassword, userNickname).get();
-                        Log.d("값", userid + userPassword + userNickname);
-                        Toast.makeText(getApplicationContext(), "회원가입 완료", Toast.LENGTH_SHORT).show();
-                        Log.d("리턴 값",result);
+                        if(result.contains("sameIdNick")) {
+                            Toast.makeText(getApplicationContext(), "아이디, 닉네임 중복", Toast.LENGTH_SHORT).show();
+                        } else if (result.contains("sameId")){
+                            Toast.makeText(getApplicationContext(), "아이디 중복", Toast.LENGTH_SHORT).show();
+                        } else if (result.contains("sameNick")) {
+                            Toast.makeText(getApplicationContext(), "닉네임 중복", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Log.d("값", userid + userPassword + userNickname);
+                            Toast.makeText(getApplicationContext(), "회원가입 완료", Toast.LENGTH_SHORT).show();
+                            Log.d("리턴 값", result);
+                            Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                            startActivity(intent);
+                            finish();
+                        }
                     } catch (Exception e) {
-                        Toast.makeText(getApplicationContext(), "회원가입 실패", Toast.LENGTH_SHORT).show();
+                        
                     }
-                    Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-                    startActivity(intent);
-                    finish();
+
                 } else if (!userPassword.equals(passwordcheck)){
                     Toast.makeText(getApplicationContext(), "비밀번호가 일치하지 않습니다.", Toast.LENGTH_SHORT).show();
                 }
