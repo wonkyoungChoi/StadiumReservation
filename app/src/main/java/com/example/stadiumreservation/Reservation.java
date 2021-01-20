@@ -4,7 +4,10 @@ import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.StrictMode;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -15,6 +18,22 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Calendar;
 
 public class Reservation extends AppCompatActivity {
@@ -25,7 +44,7 @@ public class Reservation extends AppCompatActivity {
 
     String abilitySelected , numberSelected ;
     Button btnSelectDate, btnSelectTime, btnFinishDate, btnFinishTime, ok, cancel;
-    String tname, stname, SelectDate, SelectTime, FinishDate, FinishTime;
+    String tname, stname, SelectDate, SelectTime, FinishDate, FinishTime, nick;
     EditText teamName, stadiumName;
 
     static ReservationValue reservationValue;
@@ -33,6 +52,15 @@ public class Reservation extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.reservation);
+        if (android.os.Build.VERSION.SDK_INT > 9)
+        {
+            StrictMode.ThreadPolicy policy = new
+                    StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+        }
+
+        Intent intent = getIntent();
+        nick = intent.getStringExtra("nick");
 
         teamName = (EditText) findViewById(R.id.writeName);
         stadiumName = (EditText) findViewById(R.id.writeStadium);
@@ -47,7 +75,7 @@ public class Reservation extends AppCompatActivity {
 
         reservationValue = new ReservationValue(tname, stname, SelectDate,
                 SelectTime, FinishDate, FinishTime, abilitySelected, numberSelected);
-        ReservationAdapter adapter;
+
         ok = (Button) findViewById(R.id.ok);
         cancel = (Button) findViewById(R.id.cancel);
 
@@ -85,6 +113,8 @@ public class Reservation extends AppCompatActivity {
 
                     Intent intent = new Intent(getApplicationContext(), ReservationInfo.class);
                     intent.putExtra("reservationValue", reservationValue);
+                    Log.d("nick1", nick);
+                    intent.putExtra("nick", nick);
 
                     startActivity(intent);
                     finish();
@@ -219,6 +249,8 @@ public class Reservation extends AppCompatActivity {
             timePickerDialog.show();
         }
     }
+
+
 
 
 

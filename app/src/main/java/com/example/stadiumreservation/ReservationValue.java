@@ -24,6 +24,7 @@ public class ReservationValue implements Serializable {
         this.ability = ability;
         this.number = number;
     }
+    public ReservationValue(){};
 
     public String getTeamName() {
         return teamName;

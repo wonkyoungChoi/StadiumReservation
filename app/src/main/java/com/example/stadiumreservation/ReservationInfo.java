@@ -2,6 +2,8 @@ package com.example.stadiumreservation;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.StrictMode;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -12,12 +14,22 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 
 public class ReservationInfo extends AppCompatActivity {
 
     static ArrayList<ReservationValue> list = new ArrayList<>();
     ArrayList<ReservationValue> list2 = MyMatch.list;
+    ReservationValue reservationValue, reserve;
+    String nick;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,12 +37,21 @@ public class ReservationInfo extends AppCompatActivity {
 
         //입력한 값 받아오기
         Intent intent = getIntent();
-        ReservationValue reservationValue =
-                (ReservationValue) intent.getSerializableExtra("reservationValue");
-        
-        //list에 추가
+        nick = intent.getStringExtra("nick");
+        Log.d("nick", nick);
+        reservationValue = (ReservationValue) intent.getSerializableExtra("reservationValue");
+        try {
+            Log.d("json",downloadUrl());
+            jsonParsing(downloadUrl());
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         list.add(reservationValue);
+        Log.d("reserve", String.valueOf(reserve));
         list2.add(reservationValue);
+
         
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
 
@@ -59,5 +80,65 @@ public class ReservationInfo extends AppCompatActivity {
         }
         startActivity(in);
         finish();
+    }
+
+    private String downloadUrl() throws IOException {
+        String s = null;
+        byte[] buffer = new byte[1000];
+        InputStream iStream = null;
+        try {
+            URL url = new URL("http://192.168.0.15:8080/reservationjson.jsp");
+            HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+
+            urlConnection.connect();
+
+            iStream = urlConnection.getInputStream();
+            iStream.read(buffer);
+            s = new String(buffer);
+        } catch (Exception e) {
+            Log.d("Exception download", e.toString());
+        } finally {
+            if(iStream != null) {
+                iStream.close();
+            } else
+                Log.d("iStreamNull", "iStreamNull");
+        }
+        return s;
+    }
+
+
+
+    //Json Parsing
+    private void jsonParsing(String json)
+    {
+        String nickname;
+        try{
+            JSONArray reservationArray = new JSONArray(json);
+
+            for(int i=0; i<reservationArray.length(); i++)
+            {
+                JSONObject reservationObject = reservationArray.getJSONObject(i);
+
+                nickname = reservationObject.getString("nick");
+                reserve = new ReservationValue();
+                Log.d("nick3", nickname);
+
+                if(nickname.equals(nick)) {
+                    reserve.setTeamName(reservationObject.getString("teamname"));
+                    reserve.setStadiumName(reservationObject.getString("stadium"));
+                    reserve.setStartDate(reservationObject.getString("startdate"));
+                    reserve.setStartTime(reservationObject.getString("starttime"));
+                    reserve.setFinishDate(reservationObject.getString("finishdate"));
+                    reserve.setFinishTime(reservationObject.getString("finishtime"));
+                    reserve.setAbility(reservationObject.getString("ability"));
+                    reserve.setNumber(reservationObject.getString("number"));
+                    list.add(reserve);
+                    list2.add(reserve);
+                }
+            }
+        }catch (JSONException e) {
+
+            e.printStackTrace();
+        }
     }
 }

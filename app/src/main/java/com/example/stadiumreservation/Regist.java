@@ -90,7 +90,7 @@ public class Regist extends AppCompatActivity {
         protected String doInBackground(String... strings) {
             try {
                 String str;
-                URL url = new URL("http://192.168.0.15:8080/jspbook/StatiumProject/regist.jsp");
+                URL url = new URL("http://192.168.0.15:8080/regist.jsp");
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
                 conn.setRequestMethod("POST");

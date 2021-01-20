@@ -25,6 +25,7 @@ public class LoginActivity extends AppCompatActivity {
     EditText username, password;
     Button login, cancel;
     TextView regist, findId;
+    String nick;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,8 +63,9 @@ public class LoginActivity extends AppCompatActivity {
                         if(result.contains("true")) {
                             username.setText("");
                             password.setText("");
+                            nick = substringBetween(result, ":", "/");
                             Intent intent = new Intent(getApplicationContext(), MainMenu.class);
-                            intent.putExtra("name", name);
+                            intent.putExtra("nick", nick);
                             startActivity(intent);
                         } else{
                             Toast.makeText(getApplicationContext(), "아이디 혹은 비밀번호를 다시 입력하시오.",
@@ -95,7 +97,7 @@ public class LoginActivity extends AppCompatActivity {
         protected String doInBackground(String... strings) {
             try {
                 String str;
-                URL url = new URL("http://192.168.0.15:8080/jspbook/StatiumProject/login.jsp");
+                URL url = new URL("http://192.168.0.15:8080/login.jsp");
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
                 conn.setRequestMethod("POST");
@@ -116,12 +118,25 @@ public class LoginActivity extends AppCompatActivity {
                     Log.i("통신 결과", conn.getResponseCode()+"에러");
                 }
 
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
             } catch (IOException e) {
                 e.printStackTrace();
             }
             return receiveMsg;
         }
     }
+
+    private String substringBetween(String str, String open, String close) {
+        if (str == null || open == null || close == null) {
+            return null;
+        }
+        int start = str.indexOf(open);
+        if (start != -1) {
+            int end = str.indexOf(close, start + open.length());
+            if (end != -1) {
+                return str.substring(start + open.length(), end);
+            }
+        }
+        return null;
+    }
+
 }
