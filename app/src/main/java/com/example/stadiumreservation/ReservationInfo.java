@@ -48,9 +48,8 @@ public class ReservationInfo extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        list.add(reservationValue);
         Log.d("reserve", String.valueOf(reserve));
-        list2.add(reservationValue);
+        list2.add(reserve);
 
         
         RecyclerView recyclerView = findViewById(R.id.recyclerView);

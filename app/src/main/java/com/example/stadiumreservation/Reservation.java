@@ -34,7 +34,9 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.Calendar;
+import java.util.concurrent.ExecutionException;
 
 public class Reservation extends AppCompatActivity {
     RadioGroup abilityrg;
@@ -52,12 +54,9 @@ public class Reservation extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.reservation);
-        if (android.os.Build.VERSION.SDK_INT > 9)
-        {
-            StrictMode.ThreadPolicy policy = new
-                    StrictMode.ThreadPolicy.Builder().permitAll().build();
-            StrictMode.setThreadPolicy(policy);
-        }
+        StrictMode.ThreadPolicy policy = new
+                StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
 
         Intent intent = getIntent();
         nick = intent.getStringExtra("nick");
@@ -110,14 +109,21 @@ public class Reservation extends AppCompatActivity {
                 if (ability_click == 1 && number_click == 1 && tname.trim().length() > 0 && stname.trim().length() > 0
                         && SelectDate.trim().length() > 4 && SelectTime.trim().length() > 4 && FinishDate.trim().length() > 4
                         && FinishTime.trim().length() > 4 && abilitySelected.trim().length() > 0 && numberSelected.trim().length() > 0) {
+                    String reserve;
+                    CustomTask task = new CustomTask();
+                    try {
+                        reserve = task.execute(nick, tname, stname, SelectDate, SelectTime, FinishDate, FinishTime, abilitySelected, numberSelected).get();
+                        Log.d("reservation", reserve);
+                        Intent intent = new Intent(getApplicationContext(), ReservationInfo.class);
+                        intent.putExtra("reservationValue", reservationValue);
+                        Log.d("nick1", nick);
+                        intent.putExtra("nick", nick);
+                        startActivity(intent);
+                        finish();
+                    } catch (ExecutionException | InterruptedException e) {
+                        e.printStackTrace();
+                    }
 
-                    Intent intent = new Intent(getApplicationContext(), ReservationInfo.class);
-                    intent.putExtra("reservationValue", reservationValue);
-                    Log.d("nick1", nick);
-                    intent.putExtra("nick", nick);
-
-                    startActivity(intent);
-                    finish();
                 } else {
                     Toast.makeText(getApplicationContext(), "모든 정보를 입력하시오.",
                             Toast.LENGTH_SHORT).show();
@@ -247,6 +253,42 @@ public class Reservation extends AppCompatActivity {
                 }
             }, mHour, mMinute, true);
             timePickerDialog.show();
+        }
+    }
+
+    class CustomTask extends AsyncTask<String, Void, String> {
+        String sendMsg, receiveMsg;
+        @Override
+        protected String doInBackground(String... strings) {
+            try {
+                String str;
+                URL url = new URL("http://192.168.0.15:8080/reservation.jsp");
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+                conn.setRequestMethod("POST");
+                OutputStreamWriter osw = new OutputStreamWriter(conn.getOutputStream());
+                sendMsg = "nick="+strings[0]+"&teamname="+strings[1]+"&stadium="+strings[2]+"&startdate="+strings[3]
+                        +"&starttime="+strings[4]+"&finishdate="+strings[5]+"&finishtime="+strings[6]+"&ability="+strings[7]
+                        +"&number="+strings[8];
+                osw.write(sendMsg);
+                osw.flush();
+                if(conn.getResponseCode() == conn.HTTP_OK) {
+                    InputStreamReader tmp = new InputStreamReader(conn.getInputStream(), StandardCharsets.UTF_8);
+                    BufferedReader reader = new BufferedReader(tmp);
+                    StringBuffer buffer = new StringBuffer();
+                    while ((str = reader.readLine()) != null) {
+                        buffer.append(str);
+                    }
+                    receiveMsg = buffer.toString();
+
+                } else {
+                    Log.i("통신 결과", conn.getResponseCode()+"에러");
+                }
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return receiveMsg;
         }
     }
 
