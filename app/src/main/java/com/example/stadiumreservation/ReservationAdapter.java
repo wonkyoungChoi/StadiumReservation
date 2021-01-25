@@ -28,7 +28,10 @@ public class ReservationAdapter extends RecyclerView.Adapter<ReservationAdapter.
 
     //생성자에서 데이터 리스트 객체를 전달받음
     ReservationAdapter(ArrayList<ReservationValue> list) {items = list;}
-    public void addItem(ReservationValue item) {items.add(item);}
+    public void addItem(ReservationValue item) {
+        items.add(item);
+        notifyItemInserted(items.size()-1);
+    }
 
     public ReservationValue getItem(int position) {return items.get(position);}
 

@@ -16,7 +16,7 @@ public class ApplyInfo extends AppCompatActivity {
     Button match, cancel;
 
     int clicked_item = Apply.clicked_item;
-    ArrayList<ReservationValue> list = MyMatch.list;
+    ArrayList<ReservationValue> list = new ArrayList<>();
     ApplyAdapter adapter = new ApplyAdapter(ApplyAdapter.items);
 
     @SuppressLint("SetTextI18n")

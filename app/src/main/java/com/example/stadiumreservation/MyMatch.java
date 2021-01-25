@@ -1,75 +1,55 @@
 package com.example.stadiumreservation;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
-import android.widget.ImageButton;
+import android.os.StrictMode;
+import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.ItemTouchHelper;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-public class MyMatch extends AppCompatActivity {
+    public class MyMatch extends AppCompatActivity {
+        BottomNavigationView bottomNavigationView;
+        my_reservation fragment1;
+        adapted_reservation fragment2;
+        @Override protected void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            setContentView(R.layout.mymatch);
+            bottomNavigationView = findViewById(R.id.bottom_navigation_view);
 
-    static int clicked_item;
-    Button menuClick;
+            StrictMode.ThreadPolicy policy = new
+                    StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+            //프래그먼트 생성
+            fragment1 = new my_reservation();
+            fragment2 = new adapted_reservation();
 
-    static ArrayList<ReservationValue> list = new ArrayList<>();
+            //제일 처음 띄워줄 뷰를 세팅해줍니다. commit();까지 해줘야 합니다.
+            getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout ,fragment1).commitAllowingStateLoss();
 
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.mymatch);
+            //bottomnavigationview의 아이콘을 선택 했을때 원하는 프래그먼트가 띄워질 수 있도록 리스너를 추가합니다.
+            bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                switch (menuItem.getItemId()){
+                    //menu_bottom.xml에서 지정해줬던 아이디 값을 받아와서 각 아이디값마다 다른 이벤트를 발생시킵니다.
+                    case R.id.navigation_menu1:{
+                        getSupportFragmentManager().beginTransaction()
+                                .replace(R.id.frame_layout,fragment1).commitAllowingStateLoss();
+                        return true; }
+                    case R.id.navigation_menu2:{
+                        getSupportFragmentManager().beginTransaction()
+                                .replace(R.id.frame_layout,fragment2).commitAllowingStateLoss();
+                        return true; }
+                    case R.id.navigation_menu3:{
+                        finish();
+                        return true; }
 
-        RecyclerView recyclerView = findViewById(R.id.infoRecyclerView);
 
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this,
-                LinearLayoutManager.VERTICAL, false);
-        recyclerView.setLayoutManager(layoutManager);
-
-        ReservationAdapter adapter = new ReservationAdapter(list);
-        recyclerView.setAdapter(adapter);
-
-        //리사이클러뷰 아이템 클릭
-        adapter.setOnItemClickListener(new ReservationAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(View v, int pos) {
-                clicked_item = pos;
-                finish();
-                Intent intent = new Intent(getApplicationContext(), MyMatchInfo.class);
-                intent.putExtra("ReservationValue", adapter.getItem(pos));
-
-                startActivity(intent);
+                    default: return false;
+                }
             }
-        });
+            });
+        }
 
-        //메뉴 가기 클릭
-        menuClick = (Button) findViewById(R.id.goMenu_btn);
-        menuClick.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-
-        //스와이프하여 항목 삭제 기능
-        ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT | ItemTouchHelper.LEFT) {
-            @Override
-            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
-                return false;
-            }
-
-            @Override
-            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-                list.remove(viewHolder.getLayoutPosition());
-                adapter.notifyItemRemoved(viewHolder.getLayoutPosition());
-            }
-        };
-        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
-        itemTouchHelper.attachToRecyclerView(recyclerView);
-    }
 }

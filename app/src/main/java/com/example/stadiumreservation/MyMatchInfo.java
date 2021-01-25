@@ -16,7 +16,7 @@ public class MyMatchInfo extends AppCompatActivity {
     Button cancel, back;
     String name, stname, startDate, startTime, finishDate, finishTime, abil, num;
 
-    int clicked_item = MyMatch.clicked_item;
+    int clicked_item = my_reservation.clicked_item;
     ReservationAdapter adapter = new ReservationAdapter(ReservationAdapter.items);
 
     @SuppressLint("SetTextI18n")

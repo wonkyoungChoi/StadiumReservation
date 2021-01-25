@@ -25,7 +25,7 @@ public class LoginActivity extends AppCompatActivity {
     EditText username, password;
     Button login, cancel;
     TextView regist, findId;
-    String nick;
+    static String nick;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,7 +65,6 @@ public class LoginActivity extends AppCompatActivity {
                             password.setText("");
                             nick = substringBetween(result, ":", "/");
                             Intent intent = new Intent(getApplicationContext(), MainMenu.class);
-                            intent.putExtra("nick", nick);
                             startActivity(intent);
                         } else{
                             Toast.makeText(getApplicationContext(), "아이디 혹은 비밀번호를 다시 입력하시오.",

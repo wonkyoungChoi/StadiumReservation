@@ -46,10 +46,11 @@ public class Reservation extends AppCompatActivity {
 
     String abilitySelected , numberSelected ;
     Button btnSelectDate, btnSelectTime, btnFinishDate, btnFinishTime, ok, cancel;
-    String tname, stname, SelectDate, SelectTime, FinishDate, FinishTime, nick;
+    String tname, stname, SelectDate, SelectTime, FinishDate, FinishTime;
+    String nick = LoginActivity.nick;
     EditText teamName, stadiumName;
 
-    static ReservationValue reservationValue;
+    ReservationValue reservationValue;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,9 +58,6 @@ public class Reservation extends AppCompatActivity {
         StrictMode.ThreadPolicy policy = new
                 StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
-
-        Intent intent = getIntent();
-        nick = intent.getStringExtra("nick");
 
         teamName = (EditText) findViewById(R.id.writeName);
         stadiumName = (EditText) findViewById(R.id.writeStadium);
@@ -72,8 +70,7 @@ public class Reservation extends AppCompatActivity {
         btnFinishDate = (Button) findViewById(R.id.btnFinishDate);
         btnFinishTime = (Button) findViewById(R.id.btnFinishTime);
 
-        reservationValue = new ReservationValue(tname, stname, SelectDate,
-                SelectTime, FinishDate, FinishTime, abilitySelected, numberSelected);
+        reservationValue = new ReservationValue();
 
         ok = (Button) findViewById(R.id.ok);
         cancel = (Button) findViewById(R.id.cancel);
@@ -115,9 +112,6 @@ public class Reservation extends AppCompatActivity {
                         reserve = task.execute(nick, tname, stname, SelectDate, SelectTime, FinishDate, FinishTime, abilitySelected, numberSelected).get();
                         Log.d("reservation", reserve);
                         Intent intent = new Intent(getApplicationContext(), ReservationInfo.class);
-                        intent.putExtra("reservationValue", reservationValue);
-                        Log.d("nick1", nick);
-                        intent.putExtra("nick", nick);
                         startActivity(intent);
                         finish();
                     } catch (ExecutionException | InterruptedException e) {

@@ -39,9 +39,6 @@
             android:name=".Search"
             android:label="Search" />
         <activity
-            android:name=".MyMatch"
-            android:label="MyMatch" />
-        <activity
             android:name=".Apply"
             android:label="Apply" />
         <activity
@@ -54,6 +51,9 @@
             android:name=".MyMatchInfo"
             android:label="MyMatchInfo" />
         <activity android:name=".Regist" />
+        <activity
+            android:name=".MyMatch"
+            android:label="MyMatch" />
 
 
         <meta-data

@@ -26,32 +26,25 @@ import java.util.ArrayList;
 
 public class ReservationInfo extends AppCompatActivity {
 
-    static ArrayList<ReservationValue> list = new ArrayList<>();
-    ArrayList<ReservationValue> list2 = MyMatch.list;
-    ReservationValue reservationValue, reserve;
-    String nick;
+    ArrayList<ReservationValue> list = new ArrayList<>();
+    ReservationValue reservationValue;
+    String nick = LoginActivity.nick;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.reservation_result);
+        list.clear();
 
-        //입력한 값 받아오기
-        Intent intent = getIntent();
-        nick = intent.getStringExtra("nick");
         Log.d("nick", nick);
-        reservationValue = (ReservationValue) intent.getSerializableExtra("reservationValue");
         try {
             Log.d("json",downloadUrl());
             jsonParsing(downloadUrl());
+            Log.d("reservation", String.valueOf(reservationValue));
 
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        Log.d("reserve", String.valueOf(reserve));
-        list2.add(reserve);
-
-        
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(this,
@@ -83,7 +76,7 @@ public class ReservationInfo extends AppCompatActivity {
 
     private String downloadUrl() throws IOException {
         String s = null;
-        byte[] buffer = new byte[1000];
+        byte[] buffer = new byte[10000];
         InputStream iStream = null;
         try {
             URL url = new URL("http://192.168.0.15:8080/reservationjson.jsp");
@@ -119,20 +112,19 @@ public class ReservationInfo extends AppCompatActivity {
                 JSONObject reservationObject = reservationArray.getJSONObject(i);
 
                 nickname = reservationObject.getString("nick");
-                reserve = new ReservationValue();
+                reservationValue = new ReservationValue();
                 Log.d("nick3", nickname);
 
                 if(nickname.equals(nick)) {
-                    reserve.setTeamName(reservationObject.getString("teamname"));
-                    reserve.setStadiumName(reservationObject.getString("stadium"));
-                    reserve.setStartDate(reservationObject.getString("startdate"));
-                    reserve.setStartTime(reservationObject.getString("starttime"));
-                    reserve.setFinishDate(reservationObject.getString("finishdate"));
-                    reserve.setFinishTime(reservationObject.getString("finishtime"));
-                    reserve.setAbility(reservationObject.getString("ability"));
-                    reserve.setNumber(reservationObject.getString("number"));
-                    list.add(reserve);
-                    list2.add(reserve);
+                    reservationValue.setTeamName(reservationObject.getString("teamname"));
+                    reservationValue.setStadiumName(reservationObject.getString("stadium"));
+                    reservationValue.setStartDate(reservationObject.getString("startdate"));
+                    reservationValue.setStartTime(reservationObject.getString("starttime"));
+                    reservationValue.setFinishDate(reservationObject.getString("finishdate"));
+                    reservationValue.setFinishTime(reservationObject.getString("finishtime"));
+                    reservationValue.setAbility(reservationObject.getString("ability"));
+                    reservationValue.setNumber(reservationObject.getString("number"));
+                    list.add(reservationValue);
                 }
             }
         }catch (JSONException e) {
