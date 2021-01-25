@@ -25,7 +25,7 @@ public class LoginActivity extends AppCompatActivity {
     EditText username, password;
     Button login, cancel;
     TextView regist, findId;
-    static String nick;
+    static String nick, id;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,6 +61,7 @@ public class LoginActivity extends AppCompatActivity {
                         result = task.execute(name, passwd).get();
                         Log.i("리턴 값",result);
                         if(result.contains("true")) {
+                            id = name;
                             username.setText("");
                             password.setText("");
                             nick = substringBetween(result, ":", "/");

@@ -43,6 +43,7 @@ public class Reservation extends AppCompatActivity {
     RadioGroup numberrg;
     int ability_click = 0;
     int number_click = 0;
+    String id = LoginActivity.id;
 
     String abilitySelected , numberSelected ;
     Button btnSelectDate, btnSelectTime, btnFinishDate, btnFinishTime, ok, cancel;
@@ -109,7 +110,7 @@ public class Reservation extends AppCompatActivity {
                     String reserve;
                     CustomTask task = new CustomTask();
                     try {
-                        reserve = task.execute(nick, tname, stname, SelectDate, SelectTime, FinishDate, FinishTime, abilitySelected, numberSelected).get();
+                        reserve = task.execute(nick, tname, stname, SelectDate, SelectTime, FinishDate, FinishTime, abilitySelected, numberSelected, id).get();
                         Log.d("reservation", reserve);
                         Intent intent = new Intent(getApplicationContext(), ReservationInfo.class);
                         startActivity(intent);
@@ -263,7 +264,7 @@ public class Reservation extends AppCompatActivity {
                 OutputStreamWriter osw = new OutputStreamWriter(conn.getOutputStream());
                 sendMsg = "nick="+strings[0]+"&teamname="+strings[1]+"&stadium="+strings[2]+"&startdate="+strings[3]
                         +"&starttime="+strings[4]+"&finishdate="+strings[5]+"&finishtime="+strings[6]+"&ability="+strings[7]
-                        +"&number="+strings[8];
+                        +"&number="+strings[8] +"&id="+strings[9];
                 osw.write(sendMsg);
                 osw.flush();
                 if(conn.getResponseCode() == conn.HTTP_OK) {

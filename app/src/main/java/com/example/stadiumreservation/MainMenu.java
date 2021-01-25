@@ -26,14 +26,6 @@ public class MainMenu extends AppCompatActivity {
         userHello = (TextView) findViewById(R.id.userHello);
         userHello.setText(nick + "님 안녕하세요!");
 
-        mymatch = (Button) findViewById(R.id.mymatch);
-        mymatch.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent in = new Intent(getApplicationContext(), MyMatch.class);
-                startActivity(in);
-            }
-        });
     }
 
     public void onClicked(View v) {
@@ -49,6 +41,8 @@ public class MainMenu extends AppCompatActivity {
             case R.id.search :
                 in = new Intent(getApplicationContext(), Search.class);
                 break;
+            case R.id.mymatch :
+                in = new Intent(getApplicationContext(), MyMatch.class);
         }
         startActivity(in);
     }

@@ -28,6 +28,7 @@ public class Apply extends AppCompatActivity {
     ArrayList<ReservationValue> list = new ArrayList<>();
     ReservationValue reservationValue;
     String nick = LoginActivity.nick;
+    String id = LoginActivity.id;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,7 +80,7 @@ public class Apply extends AppCompatActivity {
                 clicked_item = pos;
                 finish();
                 Intent intent = new Intent(getApplicationContext(), ApplyInfo.class);
-                intent.putExtra("applyValue", adapter.getItem(pos));
+                intent.putExtra("applyValue", reservationValue);
 
                 startActivity(intent);
             }
@@ -142,7 +143,6 @@ public class Apply extends AppCompatActivity {
 
                 nickname = reservationObject.getString("nick");
                 reservationValue = new ReservationValue();
-                Log.d("nick3", nickname);
 
                 if(!nickname.equals(nick)) {
                     reservationValue.setTeamName(reservationObject.getString("teamname"));
