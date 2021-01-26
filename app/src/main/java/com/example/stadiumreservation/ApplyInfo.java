@@ -27,9 +27,10 @@ public class ApplyInfo extends AppCompatActivity {
     String name, stname, startDate, startTime, finishDate, finishTime, abil, num;
     Button match, cancel;
     String id = LoginActivity.id;
+    ArrayList<ReservationValue> list = Apply.list;
 
     int clicked_item = Apply.clicked_item;
-    ApplyAdapter adapter = new ApplyAdapter(ApplyAdapter.items);
+    ApplyAdapter adapter = new ApplyAdapter(list);
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -72,12 +73,10 @@ public class ApplyInfo extends AppCompatActivity {
             public void onClick(View v) {
                 String result;
                 CustomTask task = new CustomTask();
-                String s1 = tName.getText().toString();
-                String s2 = stName.getText().toString();
 
                 try {
                     Log.d("value", id+name+stname+startDate+finishDate);
-                    result = task.execute(id, s1, s2, startDate, finishDate).get();
+                    result = task.execute(id, name, stname, startDate, startTime, finishDate).get();
                     Log.d("result", result);
                 } catch (ExecutionException | InterruptedException e) {
                     e.printStackTrace();
@@ -115,7 +114,7 @@ public class ApplyInfo extends AppCompatActivity {
                 conn.setRequestMethod("POST");
                 OutputStreamWriter osw = new OutputStreamWriter(conn.getOutputStream());
                 sendMsg = "id="+strings[0] + "&teamname="+strings[1] + "&stadium="+strings[2] +
-                        "&startdate="+strings[3] + "&finishdate="+strings[4];
+                        "&startdate="+strings[3] + "&starttime="+strings[4] + "&finishdate="+strings[5];
                 Log.d("SEND", sendMsg);
                 osw.write(sendMsg);
                 osw.flush();

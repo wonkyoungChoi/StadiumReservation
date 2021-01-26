@@ -1,20 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-
     <item
         android:id="@+id/navigation_menu1"
+        android:icon="@drawable/ic_baseline_person_24"
+        android:title="내 정보" />
+
+    <item
+        android:id="@+id/navigation_menu2"
         android:icon="@drawable/ic_baseline_control_point_24"
         android:title="등록한 예약" />
 
     <item
-        android:id="@+id/navigation_menu2"
+        android:id="@+id/navigation_menu3"
         android:icon="@drawable/ic_baseline_check_circle_outline_24"
         android:title="확정된 예약" />
 
     <item
-        android:id="@+id/navigation_menu3"
+        android:id="@+id/navigation_menu4"
         android:icon="@drawable/ic_baseline_exit_to_app_24"
-        android:title="메뉴" />
+        android:title="메뉴 가기" />
+
+
 
 
 </menu>

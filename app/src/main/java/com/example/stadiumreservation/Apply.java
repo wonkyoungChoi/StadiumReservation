@@ -25,10 +25,9 @@ import java.util.ArrayList;
 public class Apply extends AppCompatActivity {
 
     static int clicked_item = -1;
-    ArrayList<ReservationValue> list = new ArrayList<>();
+    static ArrayList<ReservationValue> list = new ArrayList<>();
     ReservationValue reservationValue;
     String nick = LoginActivity.nick;
-    String id = LoginActivity.id;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -94,8 +93,10 @@ public class Apply extends AppCompatActivity {
         switch(v.getId()) {
             case R.id.goMenu_btn:
                 in = new Intent(getApplicationContext(), MainMenu.class);
+                finish();
                 break;
             case R.id.myMatch_btn :
+                finish();
                 in = new Intent(getApplicationContext(), MyMatch.class);
                 break;
         }
@@ -133,7 +134,7 @@ public class Apply extends AppCompatActivity {
     //Json Parsing
     private void jsonParsing(String json)
     {
-        String nickname;
+        String nickname, id;
         try{
             JSONArray reservationArray = new JSONArray(json);
 
@@ -142,9 +143,10 @@ public class Apply extends AppCompatActivity {
                 JSONObject reservationObject = reservationArray.getJSONObject(i);
 
                 nickname = reservationObject.getString("nick");
+                id = reservationObject.getString("id");
                 reservationValue = new ReservationValue();
-
-                if(!nickname.equals(nick)) {
+                Log.d("ID", id);
+                if(!id.contains("/") && !nickname.equals(nick)) {
                     reservationValue.setTeamName(reservationObject.getString("teamname"));
                     reservationValue.setStadiumName(reservationObject.getString("stadium"));
                     reservationValue.setStartDate(reservationObject.getString("startdate"));

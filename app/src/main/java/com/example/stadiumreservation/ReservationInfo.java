@@ -65,9 +65,11 @@ public class ReservationInfo extends AppCompatActivity {
                 break;
             case R.id.goMenu_btn:
                 in = new Intent(getApplicationContext(), MainMenu.class);
+                finish();
                 break;
             case R.id.myMatch_btn :
                 in = new Intent(getApplicationContext(), MyMatch.class);
+                finish();
                 break;
         }
         startActivity(in);

@@ -35,6 +35,7 @@ public class adapted_reservation extends Fragment {
     static int clicked_item;
     ReservationValue reservationValue;
     String nick = LoginActivity.nick;
+    String myid = LoginActivity.id;
 
     ArrayList<ReservationValue> list = new ArrayList<>();
 
@@ -169,6 +170,7 @@ public class adapted_reservation extends Fragment {
     private void jsonParsing(String json)
     {
         String nickname;
+        String id;
         try{
             JSONArray reservationArray = new JSONArray(json);
 
@@ -177,10 +179,11 @@ public class adapted_reservation extends Fragment {
                 JSONObject reservationObject = reservationArray.getJSONObject(i);
 
                 nickname = reservationObject.getString("nick");
+                id = reservationObject.getString("id");
                 reservationValue = new ReservationValue();
                 Log.d("nick3", nickname);
 
-                if(nickname.equals(nick)) {
+                if(id.contains(myid) && id.contains("/")) {
                     reservationValue.setTeamName(reservationObject.getString("teamname"));
                     reservationValue.setStadiumName(reservationObject.getString("stadium"));
                     reservationValue.setStartDate(reservationObject.getString("startdate"));

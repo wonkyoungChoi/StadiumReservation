@@ -33,7 +33,7 @@
         android:layout_gravity="center"
         android:layout_marginTop="50dp"
         android:backgroundTint="#000000"
-        android:hint="username">
+        android:hint="ID">
 
         <requestFocus></requestFocus>
     </EditText>
@@ -44,6 +44,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="30dp"
+        android:hint="Password"
         android:backgroundTint="#000000"
         android:inputType="textPassword" />
 

@@ -11,8 +11,9 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
     public class MyMatch extends AppCompatActivity {
         BottomNavigationView bottomNavigationView;
-        my_reservation fragment1;
-        adapted_reservation fragment2;
+        my_info fragment1;
+        my_reservation fragment2;
+        adapted_reservation fragment3;
         @Override protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             setContentView(R.layout.mymatch);
@@ -22,8 +23,9 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
                     StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
             //프래그먼트 생성
-            fragment1 = new my_reservation();
-            fragment2 = new adapted_reservation();
+            fragment1 = new my_info();
+            fragment2 = new my_reservation();
+            fragment3 = new adapted_reservation();
 
             //제일 처음 띄워줄 뷰를 세팅해줍니다. commit();까지 해줘야 합니다.
             getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout ,fragment1).commitAllowingStateLoss();
@@ -42,10 +44,12 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
                                 .replace(R.id.frame_layout,fragment2).commitAllowingStateLoss();
                         return true; }
                     case R.id.navigation_menu3:{
-                        finish();
+                        getSupportFragmentManager().beginTransaction()
+                                .replace(R.id.frame_layout,fragment3).commitAllowingStateLoss();
                         return true; }
-
-
+                    case R.id.navigation_menu4:{
+                        finish();
+                    }
                     default: return false;
                 }
             }

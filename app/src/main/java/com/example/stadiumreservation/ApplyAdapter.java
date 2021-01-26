@@ -24,7 +24,6 @@ public class ApplyAdapter extends RecyclerView.Adapter<ApplyAdapter.ViewHolder> 
 
     static ArrayList<ReservationValue> items = new ArrayList<>();
 
-    public void addItem(ReservationValue item) {items.add(item);}
 
     public void removeItem(int position) {
         items.remove(position);

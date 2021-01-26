@@ -7,6 +7,7 @@ import android.os.StrictMode;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -14,8 +15,8 @@ import org.w3c.dom.Text;
 
 public class MainMenu extends AppCompatActivity {
     String nick = LoginActivity.nick;
-    TextView userHello;
-    Button mymatch;
+    TextView userHello, logout;
+    int i = 0;
 
     @SuppressLint("SetTextI18n")
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +27,24 @@ public class MainMenu extends AppCompatActivity {
         userHello = (TextView) findViewById(R.id.userHello);
         userHello.setText(nick + "님 안녕하세요!");
 
+        logout = (TextView) findViewById(R.id.logout);
+
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(i>=1) {
+            super.onBackPressed();
+        } else {
+            Toast.makeText(this, "뒤로가기를 한번 더 누르면 로그아웃됩니다.", Toast.LENGTH_SHORT).show();
+            i++;
+        }
     }
 
     public void onClicked(View v) {
@@ -34,15 +53,19 @@ public class MainMenu extends AppCompatActivity {
         switch(v.getId()) {
             case R.id.reservation :
                 in = new Intent(getApplicationContext(), Reservation.class);
+                in.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 break;
             case R.id.apply:
                 in = new Intent(getApplicationContext(), Apply.class);
+                in.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 break;
             case R.id.search :
                 in = new Intent(getApplicationContext(), Search.class);
+                in.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 break;
             case R.id.mymatch :
                 in = new Intent(getApplicationContext(), MyMatch.class);
+                in.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         }
         startActivity(in);
     }
