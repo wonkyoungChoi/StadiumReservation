@@ -7,7 +7,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,85 +16,62 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.util.concurrent.ExecutionException;
 
-public class LoginActivity extends AppCompatActivity {
-    EditText username, password;
-    Button login, cancel;
-    TextView regist, findId;
-    static String nick, id;
+public class findId extends AppCompatActivity {
+    String id;
+    EditText name, email;
+    Button find, cancel;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.login);
+        setContentView(R.layout.find_id);
+        name = (EditText) findViewById(R.id.name);
+        email = (EditText) findViewById(R.id.email);
+        find = (Button) findViewById(R.id.find);
+        cancel = (Button) findViewById(R.id.cancel);
 
-        username = (EditText) findViewById(R.id.username);
-
-        password = (EditText) findViewById(R.id.password);
-        login = (Button) findViewById(R.id.loginbtn);
-        cancel = (Button) findViewById(R.id.cancelbtn);
-        regist = (TextView) findViewById(R.id.regist);
-        findId = (TextView) findViewById(R.id.findId);
-
-        //취소 버튼 클릭
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View v) {
                 finish();
             }
         });
 
-        //로그인 버튼 클릭
-        login.setOnClickListener(new View.OnClickListener() {
+        find.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                String name = username.getText().toString();
-                String passwd = password.getText().toString();
-                if(name.trim().length()>0
-                && passwd.trim().length()>0) {
+            public void onClick(View v) {
+                String username = name.getText().toString();
+                String useremail = email.getText().toString();
+                if(username.trim().length()>0 && useremail.trim().length()>0) {
+                    String result;
+                    CustomTask task = new CustomTask();
                     try {
-                        String result;
-                        CustomTask task = new CustomTask();
-                        result = task.execute(name, passwd).get();
-                        Log.i("리턴 값",result);
+                        result = task.execute(username, useremail).get();
                         if(result.contains("true")) {
-                            id = name;
-                            username.setText("");
-                            password.setText("");
-                            nick = substringBetween(result, ":", "/");
-                            Intent intent = new Intent(getApplicationContext(), MainMenu.class);
+                            id = substringBetween(result, ":", "/");
+                            Intent intent = new Intent(getApplicationContext(), findid_result.class);
+                            intent.putExtra("id", id);
                             startActivity(intent);
-                        } else{
-                            Toast.makeText(getApplicationContext(), "아이디 혹은 비밀번호를 다시 입력하시오.",
+                            finish();
+                        } else {
+                            Toast.makeText(getApplicationContext(), "등록되지 않은 이름 혹은 이메일입니다.",
                                     Toast.LENGTH_SHORT).show();
                         }
-                    } catch (Exception e) {
+                    } catch (ExecutionException | InterruptedException e) {
+                        e.printStackTrace();
                     }
-
                 } else {
-                    Toast.makeText(getApplicationContext(), "아이디 혹은 비밀번호를 입력하세요.",
-                        Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "모든 정보를 입력해주세요.",
+                            Toast.LENGTH_SHORT).show();
                 }
             }
         });
 
-        regist.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), Regist.class);
-                startActivity(intent);
-            }
-        });
 
-        findId.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), findidpwd.class);
-                startActivity(intent);
-            }
-        });
+
 
     }
 
@@ -105,12 +81,12 @@ public class LoginActivity extends AppCompatActivity {
         protected String doInBackground(String... strings) {
             try {
                 String str;
-                URL url = new URL("http://192.168.0.15:8080/login.jsp");
+                URL url = new URL("http://192.168.0.15:8080/findid.jsp");
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
                 conn.setRequestMethod("POST");
                 OutputStreamWriter osw = new OutputStreamWriter(conn.getOutputStream());
-                sendMsg = "id="+strings[0]+"&pwd="+strings[1];
+                sendMsg = "name="+strings[0]+"&email="+strings[1];
                 osw.write(sendMsg);
                 osw.flush();
                 if(conn.getResponseCode() == conn.HTTP_OK) {
@@ -146,5 +122,4 @@ public class LoginActivity extends AppCompatActivity {
         }
         return null;
     }
-
 }

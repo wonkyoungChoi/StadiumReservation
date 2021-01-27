@@ -20,7 +20,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 public class Regist extends AppCompatActivity {
-    EditText id, password, nickname, passwordCheck;
+    EditText name, id, password, nickname, passwordCheck, email;
     Button regist, cancel;
 
     @Override
@@ -28,6 +28,8 @@ public class Regist extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.regist);
 
+        name = findViewById(R.id.name);
+        email = findViewById(R.id.email);
         id = findViewById(R.id.id);
         password = findViewById(R.id.password);
         passwordCheck = findViewById(R.id.passwordCheck);
@@ -38,23 +40,34 @@ public class Regist extends AppCompatActivity {
         regist.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String username = name.getText().toString();
+                String useremail = email.getText().toString();
                 String userid = id.getText().toString();
                 String userPassword = password.getText().toString();
                 String userNickname = nickname.getText().toString();
                 String passwordcheck = passwordCheck.getText().toString();
-                if(userid.trim().length()>0  && userPassword.trim().length()>0 && userNickname.trim().length()>0
+                if(username.trim().length()>0 && useremail.trim().length()>0 && userid.trim().length()>0  && userPassword.trim().length()>0 && userNickname.trim().length()>0
                         && userPassword.equals(passwordcheck)) {
                     try {
                         String result;
                         CustomTask task = new CustomTask();
-                        result = task.execute(userid,userPassword, userNickname).get();
-                        if(result.contains("sameIdNick")) {
-                            Toast.makeText(getApplicationContext(), "아이디, 닉네임 중복", Toast.LENGTH_SHORT).show();
+                        result = task.execute(username, useremail, userid,userPassword, userNickname).get();
+                        if(result.contains("sameIdNickEmail")) {
+                            Toast.makeText(getApplicationContext(), "아이디, 닉네임, 이메일 중복", Toast.LENGTH_SHORT).show();
                         } else if (result.contains("sameId")){
                             Toast.makeText(getApplicationContext(), "아이디 중복", Toast.LENGTH_SHORT).show();
                         } else if (result.contains("sameNick")) {
                             Toast.makeText(getApplicationContext(), "닉네임 중복", Toast.LENGTH_SHORT).show();
-                        } else {
+                        } else if (result.contains("sameEmail")) {
+                            Toast.makeText(getApplicationContext(), "이메일 중복", Toast.LENGTH_SHORT).show();
+                        } else if (result.contains("sameIdNick")) {
+                            Toast.makeText(getApplicationContext(), "아이디, 닉네임 중복", Toast.LENGTH_SHORT).show();
+                        } else if (result.contains("sameIdEmail")) {
+                            Toast.makeText(getApplicationContext(), "아이디, 이메일 중복", Toast.LENGTH_SHORT).show();
+                        } else if (result.contains("sameNickEmail")) {
+                            Toast.makeText(getApplicationContext(), "닉네임, 이메일 중복", Toast.LENGTH_SHORT).show();
+                        }
+                        else {
                             Log.d("값", userid + userPassword + userNickname);
                             Toast.makeText(getApplicationContext(), "회원가입 완료", Toast.LENGTH_SHORT).show();
                             Log.d("리턴 값", result);
@@ -95,7 +108,7 @@ public class Regist extends AppCompatActivity {
                 conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
                 conn.setRequestMethod("POST");
                 OutputStreamWriter osw = new OutputStreamWriter(conn.getOutputStream());
-                sendMsg = "id="+strings[0]+"&pwd="+strings[1]+"&nick="+strings[2];
+                sendMsg = "name="+strings[0]+"&email="+strings[1]+"&id="+strings[2]+"&pwd="+strings[3]+"&nick="+strings[4];
                 osw.write(sendMsg);
                 osw.flush();
                 if(conn.getResponseCode() == conn.HTTP_OK) {

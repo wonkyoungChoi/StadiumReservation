@@ -54,6 +54,22 @@
         <activity
             android:name=".MyMatch"
             android:label="MyMatch" />
+        <activity
+            android:name=".findidpwd"
+            android:label="findidpwd" />
+        <activity
+            android:name=".findId"
+            android:label="findid" />
+        <activity
+            android:name=".findid_result"
+            android:label="findid_result" />
+        <activity
+        android:name=".findPwd"
+        android:label="findpwd" />
+        <activity
+            android:name=".findpwd_result"
+            android:label="findpwd_result" />
+
 
 
         <meta-data
