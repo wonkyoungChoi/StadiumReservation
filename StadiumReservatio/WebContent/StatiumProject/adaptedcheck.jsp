@@ -96,7 +96,6 @@
 				if(teamname.equals(rs1.getString("teamname")) && stadium.equals(rs1.getString("stadium")) &&
 						startdate.equals(rs1.getString("startdate"))  && starttime.equals(rs1.getString("starttime"))  
 						&& finishdate.equals(rs1.getString("finishdate"))) {
-				out.println("update1");
 				check = true;
 				reserveid = rs1.getString("id");
 				reserveteam = rs1.getString("teamname");
@@ -109,9 +108,6 @@
 		rs1.close();
 		pstmt1.close();
 		if(check==true){
-			out.println(reserveteam);
-			out.println(reserveid);
-			out.println(id);
 			String sql1 = "update reservation set id = ? where teamname = ? and startdate = ? and stadium = ? and starttime = ?";
 			pstmt2 = conn.prepareStatement(sql1);
 			pstmt2.setString(1, id+"/"+reserveid);
