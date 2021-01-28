@@ -1,5 +1,8 @@
 package com.example.stadiumreservation;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
@@ -10,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import org.w3c.dom.Text;
@@ -31,6 +35,7 @@ import java.util.concurrent.ExecutionException;
 public class my_info extends Fragment {
     String id = LoginActivity.id;
     TextView nickname, textId;
+    ImageButton nickname_edit;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -77,6 +82,7 @@ public class my_info extends Fragment {
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_my_info, container, false);
         nickname = (TextView) v.findViewById(R.id.nickname);
+        nickname_edit = (ImageButton) v.findViewById(R.id.nickname_edit);
         textId = (TextView) v.findViewById(R.id.id);
         String result;
         String nick, myid;
@@ -87,10 +93,43 @@ public class my_info extends Fragment {
             nickname.setText(nick);
             myid = substringBetween(result, "id:", "/");
             textId.setText(myid);
-            Log.d("nickID", nick + "111" + myid);
         } catch (ExecutionException | InterruptedException e) {
             e.printStackTrace();
         }
+
+        nickname_edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final EditText editText = new EditText(v.getContext());
+
+                AlertDialog.Builder dlg = new AlertDialog.Builder(v.getContext());
+                dlg.setTitle("닉네임 변경");
+                dlg.setCancelable(false);
+                dlg.setView(editText);
+                dlg.setNegativeButton("취소",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                            }
+                        });
+                dlg.setPositiveButton("수정하기", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        String result, nick;
+                        nick = editText.getText().toString();
+                        CustomTask2 task = new CustomTask2();
+                        try {
+                            result = task.execute(nick, id).get();
+                            Log.d("nickUpdate", result);
+                        } catch (ExecutionException | InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                        nickname.setText(nick);
+                    }
+                });
+                dlg.show();
+            }
+        });
         // Inflate the layout for this fragment
         return v;
     }
@@ -107,6 +146,40 @@ public class my_info extends Fragment {
                 conn.setRequestMethod("POST");
                 OutputStreamWriter osw = new OutputStreamWriter(conn.getOutputStream());
                 sendMsg = "id="+strings[0];
+                osw.write(sendMsg);
+                osw.flush();
+                if(conn.getResponseCode() == conn.HTTP_OK) {
+                    InputStreamReader tmp = new InputStreamReader(conn.getInputStream(), StandardCharsets.UTF_8);
+                    BufferedReader reader = new BufferedReader(tmp);
+                    StringBuffer buffer = new StringBuffer();
+                    while ((str = reader.readLine()) != null) {
+                        buffer.append(str);
+                    }
+                    receiveMsg = buffer.toString();
+
+                } else {
+                    Log.i("통신 결과", conn.getResponseCode()+"에러");
+                }
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return receiveMsg;
+        }
+    }
+
+    class CustomTask2 extends AsyncTask<String, Void, String> {
+        String sendMsg, receiveMsg;
+        @Override
+        protected String doInBackground(String... strings) {
+            try {
+                String str;
+                URL url = new URL("http://192.168.0.15:8080/profilechange.jsp");
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+                conn.setRequestMethod("POST");
+                OutputStreamWriter osw = new OutputStreamWriter(conn.getOutputStream());
+                sendMsg = "nick="+strings[0] + "&id="+strings[1];
                 osw.write(sendMsg);
                 osw.flush();
                 if(conn.getResponseCode() == conn.HTTP_OK) {
