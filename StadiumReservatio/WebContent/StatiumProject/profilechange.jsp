@@ -59,9 +59,6 @@
 
 		nick = request.getParameter("nick");
 		id = request.getParameter("id");
-		
-		out.print(nick);
-		out.print(id);
 
 		pstmt.setString(1, nick);
 		pstmt.setString(2, id);
