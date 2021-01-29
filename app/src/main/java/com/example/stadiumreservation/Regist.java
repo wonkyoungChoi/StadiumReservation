@@ -54,17 +54,19 @@ public class Regist extends AppCompatActivity {
                         result = task.execute(username, useremail, userid,userPassword, userNickname).get();
                         if(result.contains("sameIdNickEmail")) {
                             Toast.makeText(getApplicationContext(), "아이디, 닉네임, 이메일 중복", Toast.LENGTH_SHORT).show();
-                        } else if (result.contains("sameId")){
+                        } else if (result.contains("sameId/")){
                             Toast.makeText(getApplicationContext(), "아이디 중복", Toast.LENGTH_SHORT).show();
-                        } else if (result.contains("sameNick")) {
+                        } else if (result.contains("sameNick/")) {
                             Toast.makeText(getApplicationContext(), "닉네임 중복", Toast.LENGTH_SHORT).show();
-                        } else if (result.contains("sameEmail")) {
+                        } else if (result.contains("sameEmail/")) {
                             Toast.makeText(getApplicationContext(), "이메일 중복", Toast.LENGTH_SHORT).show();
-                        } else if (result.contains("sameIdNick")) {
+                        } else if (result.contains("sameIdNick/")) {
                             Toast.makeText(getApplicationContext(), "아이디, 닉네임 중복", Toast.LENGTH_SHORT).show();
-                        } else if (result.contains("sameIdEmail")) {
+                        } else if (result.contains("sameIdEmail/")) {
                             Toast.makeText(getApplicationContext(), "아이디, 이메일 중복", Toast.LENGTH_SHORT).show();
-                        } else if (result.contains("sameNickEmail")) {
+                        } else if (result.contains("sameNickEmail/")) {
+                            Log.d("값", userid + userPassword + userNickname);
+                            Log.d("리턴 값", result);
                             Toast.makeText(getApplicationContext(), "닉네임, 이메일 중복", Toast.LENGTH_SHORT).show();
                         }
                         else {

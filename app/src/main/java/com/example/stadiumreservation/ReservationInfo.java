@@ -62,6 +62,7 @@ public class ReservationInfo extends AppCompatActivity {
         switch(v.getId()) {
             case R.id.regist :
                 in = new Intent(getApplicationContext(), Reservation.class);
+                finish();
                 break;
             case R.id.goMenu_btn:
                 in = new Intent(getApplicationContext(), MainMenu.class);
@@ -73,7 +74,6 @@ public class ReservationInfo extends AppCompatActivity {
                 break;
         }
         startActivity(in);
-        finish();
     }
 
     private String downloadUrl() throws IOException {
@@ -106,6 +106,7 @@ public class ReservationInfo extends AppCompatActivity {
     private void jsonParsing(String json)
     {
         String nickname;
+        String id;
         try{
             JSONArray reservationArray = new JSONArray(json);
 
@@ -114,10 +115,11 @@ public class ReservationInfo extends AppCompatActivity {
                 JSONObject reservationObject = reservationArray.getJSONObject(i);
 
                 nickname = reservationObject.getString("nick");
+                id = reservationObject.getString("id");
                 reservationValue = new ReservationValue();
                 Log.d("nick3", nickname);
 
-                if(nickname.equals(nick)) {
+                if(nickname.equals(nick) && !id.contains("/")) {
                     reservationValue.setTeamName(reservationObject.getString("teamname"));
                     reservationValue.setStadiumName(reservationObject.getString("stadium"));
                     reservationValue.setStartDate(reservationObject.getString("startdate"));

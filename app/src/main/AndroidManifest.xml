@@ -50,6 +50,9 @@
         <activity
             android:name=".MyMatchInfo"
             android:label="MyMatchInfo" />
+        <activity
+            android:name=".MyMatchInfo2"
+            android:label="MyMatchInfo2" />
         <activity android:name=".Regist" />
         <activity
             android:name=".MyMatch"

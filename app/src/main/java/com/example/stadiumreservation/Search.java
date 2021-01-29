@@ -1,6 +1,7 @@
 package com.example.stadiumreservation;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
@@ -48,6 +49,7 @@ public class Search extends AppCompatActivity
     ArrayList<FootSalPlace> footsalList = new ArrayList<>();
     LatLng myLocation;
     List<Marker> previous_marker = null;
+
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

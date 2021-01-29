@@ -28,32 +28,36 @@ public class Apply extends AppCompatActivity {
     static ArrayList<ReservationValue> list = new ArrayList<>();
     ReservationValue reservationValue;
     String nick = LoginActivity.nick;
+    Button goMenu, myMatch;
+
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.apply);
+
+        goMenu = (Button) findViewById(R.id.goMenu_btn);
+        goMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
+        myMatch = (Button) findViewById(R.id.myMatch_btn);
+        myMatch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), MyMatch.class);
+                startActivity(intent);
+                finish();
+            }
+        });
 
         list.clear();
 
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
 
-        /*
-        new Thread(new Runnable(){
-            @Override
-            public void run() {
-                Log.d("nick", nick);
-                try {
-                    Log.d("json",downloadUrl());
-                    jsonParsing(downloadUrl());
-                    Log.d("reservation", String.valueOf(reservationValue));
-
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }).start();
-        */
 
         try {
             Log.d("json",downloadUrl());
@@ -77,6 +81,7 @@ public class Apply extends AppCompatActivity {
             public void onItemClick(View v, int pos) {
                 //클릭한 item의 position을 전역변수로 설정해 Info로 가져감
                 clicked_item = pos;
+                Log.d("value", reservationValue.getTeamName());
                 finish();
                 Intent intent = new Intent(getApplicationContext(), ApplyInfo.class);
                 intent.putExtra("applyValue", reservationValue);
@@ -87,22 +92,6 @@ public class Apply extends AppCompatActivity {
 
         applyRecyclerview.setAdapter(adapter);
     }
-
-    public void onClicked(View v) {
-        Intent in = null;
-        switch(v.getId()) {
-            case R.id.goMenu_btn:
-                in = new Intent(getApplicationContext(), MainMenu.class);
-                finish();
-                break;
-            case R.id.myMatch_btn :
-                finish();
-                in = new Intent(getApplicationContext(), MyMatch.class);
-                break;
-        }
-        startActivity(in);
-    }
-
 
 
     private String downloadUrl() throws IOException {

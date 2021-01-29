@@ -55,19 +55,15 @@ public class MainMenu extends AppCompatActivity {
         switch(v.getId()) {
             case R.id.reservation :
                 in = new Intent(getApplicationContext(), Reservation.class);
-                in.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 break;
             case R.id.apply:
                 in = new Intent(getApplicationContext(), Apply.class);
-                in.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 break;
             case R.id.search :
                 in = new Intent(getApplicationContext(), Search.class);
-                in.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 break;
             case R.id.mymatch :
                 in = new Intent(getApplicationContext(), MyMatch.class);
-                in.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         }
         startActivity(in);
     }
