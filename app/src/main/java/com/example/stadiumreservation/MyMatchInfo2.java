@@ -4,11 +4,11 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.StrictMode;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -19,28 +19,21 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
-public class ApplyInfo extends AppCompatActivity {
+public class MyMatchInfo2 extends AppCompatActivity {
     TextView tName, stName, start, finish, ability, number;
+    Button cancel, back;
     String name, stname, startDate, startTime, finishDate, finishTime, abil, num;
-    Button match, cancel;
-    String id = LoginActivity.id;
-    ArrayList<ReservationValue> list = Apply.list;
-
-    int clicked_item = Apply.clicked_item;
-    ApplyAdapter adapter = new ApplyAdapter(list);
 
     @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.apply_info);
+        setContentView(R.layout.mymatch_info);
 
-
-        match = (Button) findViewById(R.id.match);
-        cancel = (Button) findViewById(R.id.applyCancel);
+        cancel = (Button) findViewById(R.id.match);
+        back = (Button) findViewById(R.id.applyCancel);
         tName = (TextView) findViewById(R.id.team);
         stName = (TextView) findViewById(R.id.stadium);
         start = (TextView) findViewById(R.id.startDateTime);
@@ -49,8 +42,7 @@ public class ApplyInfo extends AppCompatActivity {
         number = (TextView) findViewById(R.id.number_);
 
         Intent intent = getIntent();
-        ReservationValue reservationValue = (ReservationValue) intent.getSerializableExtra("applyValue");
-
+        ReservationValue reservationValue = (ReservationValue) intent.getSerializableExtra("ReservationValue");
         name = reservationValue.getTeamName();
         stname = reservationValue.getStadiumName();
         startDate = reservationValue.getStartDate();
@@ -60,6 +52,7 @@ public class ApplyInfo extends AppCompatActivity {
         abil = reservationValue.getAbility();
         num = reservationValue.getNumber();
 
+
         tName.setText(name);
         stName.setText(stname);
         start.setText(startDate + " " + startTime);
@@ -67,34 +60,32 @@ public class ApplyInfo extends AppCompatActivity {
         ability.setText(abil);
         number.setText(num);
 
-        //신청하기 클릭
-        match.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String result;
-                CustomTask task = new CustomTask();
 
-                try {
-                    Log.d("value", id+name+stname+startDate+finishDate);
-                    result = task.execute(id, name, stname, startDate, startTime, finishDate).get();
-                    Log.d("result", result);
-                } catch (ExecutionException | InterruptedException e) {
-                    e.printStackTrace();
-                }
-
-                finish();
-                Intent intent = new Intent(getApplicationContext(), Apply.class);
-                startActivity(intent);
-            }
-        });
-
-
+        //예약취소 버튼
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
-                Intent intent = new Intent(getApplicationContext(), Apply.class);
-                startActivity(intent);
+
+                CustomTask task = new CustomTask();
+                String result;
+                try {
+                    result = task.execute(stname, startDate, startTime, finishTime).get();
+                    Log.d("delete", result);
+                } catch (ExecutionException | InterruptedException e) {
+                    e.printStackTrace();
+                }
+                Toast.makeText(getApplicationContext(), "예약 취소", Toast.LENGTH_SHORT).show();
+                finish();
+            }
+        });
+
+
+        //뒤로가기 버튼
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
             }
         });
 
@@ -106,14 +97,13 @@ public class ApplyInfo extends AppCompatActivity {
         protected String doInBackground(String... strings) {
             try {
                 String str;
-                URL url = new URL("http://192.168.0.15:8080/adaptedcheck.jsp");
+                URL url = new URL("http://192.168.0.15:8080/adaptedcancel.jsp");
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
                 conn.setRequestMethod("POST");
                 OutputStreamWriter osw = new OutputStreamWriter(conn.getOutputStream());
-                sendMsg = "id="+strings[0] + "&teamname="+strings[1] + "&stadium="+strings[2] +
-                        "&startdate="+strings[3] + "&starttime="+strings[4] + "&finishdate="+strings[5];
-                Log.d("SEND", sendMsg);
+                sendMsg = "stadium="+strings[0] + "&startdate="+strings[1]
+                        + "&starttime="+strings[2] + "&finishtime="+strings[3];
                 osw.write(sendMsg);
                 osw.flush();
                 if(conn.getResponseCode() == conn.HTTP_OK) {
@@ -134,7 +124,8 @@ public class ApplyInfo extends AppCompatActivity {
             }
             return receiveMsg;
         }
-
     }
-}
 
+
+
+}

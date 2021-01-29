@@ -1,6 +1,7 @@
 package com.example.stadiumreservation;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -14,16 +15,22 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -89,7 +96,6 @@ public class adapted_reservation extends Fragment {
         StrictMode.setThreadPolicy(policy);
 
         list.clear();
-        Log.d("nick", nick);
         try {
             Log.d("json",downloadUrl());
             jsonParsing(downloadUrl());
@@ -113,7 +119,7 @@ public class adapted_reservation extends Fragment {
             @Override
             public void onItemClick(View v, int pos) {
                 clicked_item = pos;
-                Intent intent = new Intent(getContext(), MyMatchInfo.class);
+                Intent intent = new Intent(getContext(), MyMatchInfo2.class);
                 intent.putExtra("ReservationValue", adapter.getItem(pos));
 
                 startActivity(intent);
@@ -130,14 +136,64 @@ public class adapted_reservation extends Fragment {
 
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+                String stname, startDate, startTime, finishTime;
+                ReservationValue value;
+                value = list.get(viewHolder.getLayoutPosition());
+                stname = value.getStadiumName();
+                startDate = value.getStartDate();
+                startTime = value.getStartTime();
+                finishTime = value.getFinishTime();
+                CustomTask task = new CustomTask();
+                try {
+                    task.execute(stname, startDate, startTime, finishTime).get();
+                } catch (ExecutionException | InterruptedException e) {
+                    e.printStackTrace();
+                }
+                Toast.makeText(getContext(), "예약 취소", Toast.LENGTH_SHORT).show();
                 list.remove(viewHolder.getLayoutPosition());
                 adapter.notifyItemRemoved(viewHolder.getLayoutPosition());
+
             }
         };
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
         itemTouchHelper.attachToRecyclerView(recyclerView);
         // Inflate the layout for this fragment
         return v;
+    }
+
+    class CustomTask extends AsyncTask<String, Void, String> {
+        String sendMsg, receiveMsg;
+        @Override
+        protected String doInBackground(String... strings) {
+            try {
+                String str;
+                URL url = new URL("http://192.168.0.15:8080/adaptedcancel.jsp");
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+                conn.setRequestMethod("POST");
+                OutputStreamWriter osw = new OutputStreamWriter(conn.getOutputStream());
+                sendMsg = "stadium="+strings[0] + "&startdate="+strings[1]
+                        + "&starttime="+strings[2] + "&finishtime="+strings[3];
+                osw.write(sendMsg);
+                osw.flush();
+                if(conn.getResponseCode() == conn.HTTP_OK) {
+                    InputStreamReader tmp = new InputStreamReader(conn.getInputStream(), StandardCharsets.UTF_8);
+                    BufferedReader reader = new BufferedReader(tmp);
+                    StringBuffer buffer = new StringBuffer();
+                    while ((str = reader.readLine()) != null) {
+                        buffer.append(str);
+                    }
+                    receiveMsg = buffer.toString();
+
+                } else {
+                    Log.i("통신 결과", conn.getResponseCode()+"에러");
+                }
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return receiveMsg;
+        }
     }
 
     private String downloadUrl() throws IOException {

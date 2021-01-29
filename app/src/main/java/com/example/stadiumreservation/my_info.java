@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
@@ -121,10 +122,17 @@ public class my_info extends Fragment {
                         try {
                             result = task.execute(nick, id).get();
                             Log.d("nickUpdate", result);
+                            if(result.contains("sameNick")) {
+                                Toast.makeText(getContext(), "중복된 닉네임입니다.",
+                                        Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(getContext(), "닉네임을 변경하였습니다.",
+                                        Toast.LENGTH_SHORT).show();
+                                nickname.setText(nick);
+                            }
                         } catch (ExecutionException | InterruptedException e) {
                             e.printStackTrace();
                         }
-                        nickname.setText(nick);
                     }
                 });
                 dlg.show();
