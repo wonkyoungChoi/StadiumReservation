@@ -91,23 +91,23 @@
 		
 						
 		//id 값을 입력한 경우 sql 문장을 수행.
-		if(request.getParameter("id") != null && i == 0 && k == 0) {
+		if(request.getParameter("id") != null && i == 0 && k == 0 && j==0) {
 			pstmt.executeUpdate();
 		}
 		if(i==1 && k==1 && j==1) {
 			out.print("sameIdNickEmail");
 		} else if (i==0 && k==1 && j==0) {
-			out.print("sameNick");
+			out.print("sameNick/");
 		} else if (i==1 && k==0  && j==0) {
-			out.print("sameId");
+			out.print("sameId/");
 		} else if (i==0 && k==0  && j==1) {
-			out.print("sameEmail");
+			out.print("sameEmail/");
 		} else if (i==1 && k==1 && j==0) {
-			out.print("sameIdNick");
+			out.print("sameIdNick/");
 		} else if (i==1 && k==0 && j==1) {
-			out.print("sameIdEmail");
+			out.print("sameIdEmail/");
 		} else if (i==0 && k==1 && j==1) {
-			out.print("sameNickEmail");
+			out.print("sameNickEmail/");
 		}
 		i = 0;
 		k = 0;
