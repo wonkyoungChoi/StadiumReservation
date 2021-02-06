@@ -110,7 +110,7 @@
 		if(check==true){
 			String sql1 = "update reservation set id = ? where teamname = ? and startdate = ? and stadium = ? and starttime = ?";
 			pstmt2 = conn.prepareStatement(sql1);
-			pstmt2.setString(1, id+"/"+reserveid);
+			pstmt2.setString(1, id+"*"+reserveid + "^");
 			pstmt2.setString(2, reserveteam);
 			pstmt2.setString(3, reservedate);
 			pstmt2.setString(4, reservestadium);

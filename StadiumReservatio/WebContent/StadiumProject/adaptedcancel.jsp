@@ -61,30 +61,26 @@
 		//데이터베이스 연결정보를 이용해 Connection 인스턴스 확보
 		conn = DriverManager.getConnection(jdbc_url, "root", "1234");
 		
+		
 		stadium = request.getParameter("stadium");
 		startdate = request.getParameter("startdate");
 		starttime = request.getParameter("starttime");
 		finishtime = request.getParameter("finishtime");
 		
-		if(stadium!=null){
-		
-		// select 문장을 문자열 형태로 구성한다.
-		String sql = "delete from reservation where stadium = ? and startdate = ? and starttime = ? and finishtime = ?";
-		
+		String sql = "select id, stadium, startdate, starttime, finishtime from reservation";
 		pstmt = conn.prepareStatement(sql);
-		pstmt.setString(1, stadium);
-		pstmt.setString(2, startdate);
-		pstmt.setString(3, starttime);
-		pstmt.setString(4, finishtime);
+		ResultSet rs = pstmt.executeQuery();
 		
-		out.println(stadium + startdate + starttime + finishtime);
-		out.println("delete");
+		while(rs.next()) {
+			if(stadium.equals(rs.getString("stadium")) && startdate.equals(rs.getString("startdate")) && starttime.equals(rs.getString("starttime"))
+					&& finishtime.equals(rs.getString("finishtime"))) {
+				out.println("id:" + rs.getString("id"));
+			}
+		}
 		
-		
-		pstmt.executeUpdate();
+		rs.close();
 		pstmt.close();
 		conn.close();
-		}
 
 	}
 	catch(Exception e) {
