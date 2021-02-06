@@ -24,7 +24,16 @@ import java.util.concurrent.ExecutionException;
 public class MyMatchInfo2 extends AppCompatActivity {
     TextView tName, stName, start, finish, ability, number;
     Button cancel, back;
-    String name, stname, startDate, startTime, finishDate, finishTime, abil, num;
+    String name, stname, startDate, startTime, finishDate, finishTime, abil, num, myId, otherid;
+    String myid = LoginActivity.id;
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(getApplicationContext(), MyMatch.class);
+        startActivity(intent);
+        finish();
+    }
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -72,6 +81,22 @@ public class MyMatchInfo2 extends AppCompatActivity {
                 try {
                     result = task.execute(stname, startDate, startTime, finishTime).get();
                     Log.d("delete", result);
+                    myId = substringBetween(result, ":", "*");
+                    Log.d("myId", myId);
+                    otherid = substringBetween(result, "*", "^");
+                    Log.d("otherid", otherid);
+                    CustomTask2 task1 = new CustomTask2();
+                    if(myid.equals(myId)) {
+                        task1.execute(otherid, stname, startDate, startTime, finishTime).get();
+                        Intent intent = new Intent(getApplicationContext(), MyMatch.class);
+                        startActivity(intent);
+                        finish();
+                    } else if(myid.equals(otherid)) {
+                        task1.execute(myId, stname, startDate, startTime, finishTime).get();
+                        Intent intent = new Intent(getApplicationContext(), MyMatch.class);
+                        startActivity(intent);
+                        finish();
+                    }
                 } catch (ExecutionException | InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -102,7 +127,7 @@ public class MyMatchInfo2 extends AppCompatActivity {
                 conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
                 conn.setRequestMethod("POST");
                 OutputStreamWriter osw = new OutputStreamWriter(conn.getOutputStream());
-                sendMsg = "stadium="+strings[0] + "&startdate="+strings[1]
+                sendMsg = "&stadium="+strings[0] + "&startdate="+strings[1]
                         + "&starttime="+strings[2] + "&finishtime="+strings[3];
                 osw.write(sendMsg);
                 osw.flush();
@@ -124,6 +149,55 @@ public class MyMatchInfo2 extends AppCompatActivity {
             }
             return receiveMsg;
         }
+    }
+
+    class CustomTask2 extends AsyncTask<String, Void, String> {
+        String sendMsg, receiveMsg;
+        @Override
+        protected String doInBackground(String... strings) {
+            try {
+                String str;
+                URL url = new URL("http://192.168.0.15:8080/adaptedcancel1.jsp");
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+                conn.setRequestMethod("POST");
+                OutputStreamWriter osw = new OutputStreamWriter(conn.getOutputStream());
+                sendMsg = "id="+strings[0] +"&stadium="+strings[1] + "&startdate="+strings[2]
+                        + "&starttime="+strings[3] + "&finishtime="+strings[4];
+                osw.write(sendMsg);
+                osw.flush();
+                if(conn.getResponseCode() == conn.HTTP_OK) {
+                    InputStreamReader tmp = new InputStreamReader(conn.getInputStream(), StandardCharsets.UTF_8);
+                    BufferedReader reader = new BufferedReader(tmp);
+                    StringBuffer buffer = new StringBuffer();
+                    while ((str = reader.readLine()) != null) {
+                        buffer.append(str);
+                    }
+                    receiveMsg = buffer.toString();
+
+                } else {
+                    Log.i("통신 결과", conn.getResponseCode()+"에러");
+                }
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return receiveMsg;
+        }
+    }
+
+    private String substringBetween(String str, String open, String close) {
+        if (str == null || open == null || close == null) {
+            return null;
+        }
+        int start = str.indexOf(open);
+        if (start != -1) {
+            int end = str.indexOf(close, start + open.length());
+            if (end != -1) {
+                return str.substring(start + open.length(), end);
+            }
+        }
+        return null;
     }
 
 

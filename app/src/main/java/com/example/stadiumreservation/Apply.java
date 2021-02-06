@@ -135,7 +135,7 @@ public class Apply extends AppCompatActivity {
                 id = reservationObject.getString("id");
                 reservationValue = new ReservationValue();
                 Log.d("ID", id);
-                if(!id.contains("/") && !nickname.equals(nick)) {
+                if(!id.contains("*") && !nickname.equals(nick)) {
                     reservationValue.setTeamName(reservationObject.getString("teamname"));
                     reservationValue.setStadiumName(reservationObject.getString("stadium"));
                     reservationValue.setStartDate(reservationObject.getString("startdate"));

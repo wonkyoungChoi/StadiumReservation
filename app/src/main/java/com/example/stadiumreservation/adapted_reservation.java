@@ -41,7 +41,6 @@ public class adapted_reservation extends Fragment {
 
     static int clicked_item;
     ReservationValue reservationValue;
-    String nick = LoginActivity.nick;
     String myid = LoginActivity.id;
 
     ArrayList<ReservationValue> list = new ArrayList<>();
@@ -97,10 +96,7 @@ public class adapted_reservation extends Fragment {
 
         list.clear();
         try {
-            Log.d("json",downloadUrl());
             jsonParsing(downloadUrl());
-            Log.d("reservation", String.valueOf(reservationValue));
-
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -136,7 +132,7 @@ public class adapted_reservation extends Fragment {
 
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-                String stname, startDate, startTime, finishTime;
+                String stname, startDate, startTime, finishTime, result, myId, otherid;
                 ReservationValue value;
                 value = list.get(viewHolder.getLayoutPosition());
                 stname = value.getStadiumName();
@@ -145,7 +141,19 @@ public class adapted_reservation extends Fragment {
                 finishTime = value.getFinishTime();
                 CustomTask task = new CustomTask();
                 try {
-                    task.execute(stname, startDate, startTime, finishTime).get();
+                    result = task.execute(stname, startDate, startTime, finishTime).get();
+                    Log.d("Result", result);
+                    myId = substringBetween(result, ":", "*");
+                    Log.d("myId", myId);
+                    otherid = substringBetween(result, "*", "^");
+                    Log.d("otherid", otherid);
+                    CustomTask2 task1 = new CustomTask2();
+                    if(myid.equals(myId)) {
+                        task1.execute(otherid, stname, startDate, startTime, finishTime).get();
+                    } else if(myid.equals(otherid)) {
+                        task1.execute(myId, stname, startDate, startTime, finishTime).get();
+                    }
+
                 } catch (ExecutionException | InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -174,6 +182,41 @@ public class adapted_reservation extends Fragment {
                 OutputStreamWriter osw = new OutputStreamWriter(conn.getOutputStream());
                 sendMsg = "stadium="+strings[0] + "&startdate="+strings[1]
                         + "&starttime="+strings[2] + "&finishtime="+strings[3];
+                osw.write(sendMsg);
+                osw.flush();
+                if(conn.getResponseCode() == conn.HTTP_OK) {
+                    InputStreamReader tmp = new InputStreamReader(conn.getInputStream(), StandardCharsets.UTF_8);
+                    BufferedReader reader = new BufferedReader(tmp);
+                    StringBuffer buffer = new StringBuffer();
+                    while ((str = reader.readLine()) != null) {
+                        buffer.append(str);
+                    }
+                    receiveMsg = buffer.toString();
+
+                } else {
+                    Log.i("통신 결과", conn.getResponseCode()+"에러");
+                }
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return receiveMsg;
+        }
+    }
+
+    class CustomTask2 extends AsyncTask<String, Void, String> {
+        String sendMsg, receiveMsg;
+        @Override
+        protected String doInBackground(String... strings) {
+            try {
+                String str;
+                URL url = new URL("http://192.168.0.15:8080/adaptedcancel1.jsp");
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+                conn.setRequestMethod("POST");
+                OutputStreamWriter osw = new OutputStreamWriter(conn.getOutputStream());
+                sendMsg = "id="+strings[0] +"&stadium="+strings[1] + "&startdate="+strings[2]
+                        + "&starttime="+strings[3] + "&finishtime="+strings[4];
                 osw.write(sendMsg);
                 osw.flush();
                 if(conn.getResponseCode() == conn.HTTP_OK) {
@@ -239,7 +282,7 @@ public class adapted_reservation extends Fragment {
                 reservationValue = new ReservationValue();
                 Log.d("nick3", nickname);
 
-                if(id.contains(myid) && id.contains("/")) {
+                if(id.contains(myid) && id.contains("*")) {
                     reservationValue.setTeamName(reservationObject.getString("teamname"));
                     reservationValue.setStadiumName(reservationObject.getString("stadium"));
                     reservationValue.setStartDate(reservationObject.getString("startdate"));
@@ -255,5 +298,19 @@ public class adapted_reservation extends Fragment {
 
             e.printStackTrace();
         }
+    }
+
+    private String substringBetween(String str, String open, String close) {
+        if (str == null || open == null || close == null) {
+            return null;
+        }
+        int start = str.indexOf(open);
+        if (start != -1) {
+            int end = str.indexOf(close, start + open.length());
+            if (end != -1) {
+                return str.substring(start + open.length(), end);
+            }
+        }
+        return null;
     }
 }
