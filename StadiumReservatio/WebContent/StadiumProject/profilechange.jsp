@@ -38,6 +38,9 @@
 	//데이터베이스 연결관련 변수 선언
 	Connection conn = null;
 	PreparedStatement pstmt = null;
+	PreparedStatement pstmt1 = null;
+	PreparedStatement pstmt2 = null;
+	ResultSet rs = null;
 	
 	String nick, id;
 
@@ -51,21 +54,42 @@
 		//데이터베이스 연결정보를 이용해 Connection 인스턴스 확보
 		conn = DriverManager.getConnection(jdbc_url, "root", "1234");
 		
-		// select 문장을 문자열 형태로 구성한다.
-		String sql = "update stadium set nick = ? where id = ?";
+		String sql = "select nick from stadium";
 		pstmt = conn.prepareStatement(sql);
-		int i=1;
-		
-
+		rs = pstmt.executeQuery();
+		 
 		nick = request.getParameter("nick");
 		id = request.getParameter("id");
-
-		pstmt.setString(1, nick);
-		pstmt.setString(2, id);
-		pstmt.executeUpdate();
 		
+		boolean check = true;
+		
+		while(rs.next()) {
+			if(nick !=null && id != null) {
+				if(nick.equals(rs.getString("nick"))){
+					out.println("sameNick");
+					check = false;
+				}
+			}
+		}
 		pstmt.close();
+		
+		if(check==true) {
+		String sql1 = "update stadium SET nick = ? WHERE id = ?";
+		pstmt1 = conn.prepareStatement(sql1);
+		pstmt1.setString(1, nick);
+		pstmt1.setString(2, id);
+		pstmt1.executeUpdate();
+		pstmt1.close();
+		
+		
+		String sql2 = "update reservation SET nick = ? WHERE id = ?";
+		pstmt2 = conn.prepareStatement(sql2);
+		pstmt2.setString(1, nick);
+		pstmt2.setString(2, id);
+		pstmt2.executeUpdate();
+		pstmt2.close();
 		conn.close();
+		}
 	}
 	catch(Exception e) {
 		System.out.println(e);
